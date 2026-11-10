@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#050813"/><stop offset=".55" stop-color="#11172a"/><stop offset="1" stop-color="#ff2400" stop-opacity=".55"/></linearGradient><linearGradient id="armor" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#263447"/><stop offset=".5" stop-color="#080d18"/><stop offset="1" stop-color="#ff2400"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="600" height="750" fill="url(#bg)"/><g opacity=".28" stroke="#ff8a00" fill="none"><path d="M0 120H600M0 240H600M0 360H600M0 480H600M0 600H600"/><path d="M100 0V750M200 0V750M300 0V750M400 0V750M500 0V750"/></g>
+<circle cx="300" cy="310" r="205" fill="#ff2400" opacity=".13" filter="url(#glow)"/>
+<path d="M130 750L160 500 215 410 190 300 230 235 250 155 280 210 300 130 325 210 365 155 380 250 420 310 395 425 455 510 480 750Z" fill="url(#armor)" stroke="#ff8a00" stroke-width="5"/>
+<path d="M210 285L245 220 278 270 300 190 326 270 360 220 390 295 360 365 300 400 240 365Z" fill="#080c14" stroke="#ff2400" stroke-width="5"/>
+<path d="M235 315L280 325 265 345Z" fill="#ff8a00" filter="url(#glow)"/><path d="M365 315L320 325 335 345Z" fill="#ff8a00" filter="url(#glow)"/>
+<path d="M250 370L300 395 350 370 330 420 300 435 270 420Z" fill="#05070c" stroke="#ff8a00" stroke-width="4"/>
+<path d="M205 450L300 500 395 450 370 600 300 660 230 600Z" fill="#0b111c" stroke="#ff2400" stroke-width="6"/><path d="M300 500V640M240 535L280 565M360 535L320 565" stroke="#ff8a00" stroke-width="6" filter="url(#glow)"/>
+<path d="M150 520L90 610 140 630 190 570M450 520L510 610 460 630 410 570" fill="none" stroke="#ff2400" stroke-width="20"/>
+<text x="300" y="680" fill="#ff8a00" font-family="monospace" font-size="28" font-weight="bold" text-anchor="middle" letter-spacing="5">KRAZIX</text><text x="300" y="714" fill="#ffffff" opacity=".8" font-family="monospace" font-size="15" text-anchor="middle" letter-spacing="3">MIRE PROTOCOL</text>
+</svg>
