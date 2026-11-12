@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NOXGATOR | Neon Fang Convergence</title>
+
+  <meta name="description" content="NOXGATOR - A dark fantasy universe of six territories, six commanders, and 144 warriors.">
+  <meta property="og:title" content="NOXGATOR | Neon Fang Convergence">
+  <meta property="og:description" content="Six territories. Six commanders. 144 warriors. One living mire.">
+  <meta property="og:image" content="hero.png">
+  <meta property="og:type" content="website">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Orbitron',sans-serif;
+    }
+
+    body{
+      background:radial-gradient(circle at 20% 20%,#0f0f2a,#03050a 60%);
+      color:#fff;
+      overflow-x:hidden;
+    }
+
+    header{
+      text-align:center;
+      padding:90px 20px 60px;
+    }
+
+    header h1{
+      font-size:52px;
+      background:linear-gradient(90deg,#ff3c00,#00f7ff,#ff00c8);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 25px #00f7ff;
+      margin-bottom:10px;
+    }
+
+    header p{
+      opacity:.7;
+      margin-top:10px;
+      font-size:18px;
+      line-height:1.7;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:15px 35px;
+      margin:10px;
+      border-radius:40px;
+      background:linear-gradient(45deg,#ff00c8,#00f7ff);
+      color:#fff;
+      text-decoration:none;
+      border:none;
+      cursor:pointer;
+      transition:.3s;
+      font-size:15px;
+    }
+
+    .btn:hover{
+      transform:scale(1.08);
+      box-shadow:0 0 45px #00f7ff;
+    }
+
+    .btn.secondary{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn.secondary:hover{
+      box-shadow:0 0 35px rgba(255,255,255,0.3);
+    }
+
+    section{
+      padding:80px 20px;
+      max-width:1200px;
+      margin:auto;
+    }
+
+    h2{
+      margin-bottom:25px;
+      font-size:28px;
+      color:#ff9900;
+      text-shadow:0 0 15px #ff9900;
+    }
+
+    .token-box{
+      background:rgba(20,25,34,0.7);
+      padding:30px;
+      border-radius:20px;
+      backdrop-filter:blur(15px);
+      box-shadow:0 0 30px rgba(255,60,0,.4);
+      line-height:2;
+      animation:fadeIn .6s ease-in-out;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(15px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    .contract-line{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .contract{
+      word-break:break-all;
+      font-size:14px;
+      opacity:0.9;
+    }
+
+    .copy-btn{
+      padding:10px 20px;
+      border-radius:25px;
+      border:none;
+      cursor:pointer;
+      background:linear-gradient(45deg,#00f7ff,#ff00c8);
+      color:#fff;
+      transition:.3s;
+      font-size:13px;
+    }
+
+    .copy-btn:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 25px #00f7ff;
+    }
+
+    .tabs{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:20px;
+    }
+
+    .tabBtn{
+      padding:10px 20px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:25px;
+      color:#fff;
+      cursor:pointer;
+      transition:.3s;
+      font-size:14px;
+    }
+
+    .tabBtn:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 20px rgba(0,247,255,0.5);
+    }
+
+    .tabBtn.active{
+      background:linear-gradient(45deg,#ff00c8,#00f7ff);
+      border:none;
+      box-shadow:0 0 30px rgba(0,247,255,0.7);
+    }
+
+    .fragmentCard{
+      background:rgba(20,25,34,0.8);
+      padding:25px;
+      border-radius:15px;
+      margin:10px 0;
+      box-shadow:0 0 25px rgba(0,247,255,0.5);
+      animation:fadeIn .6s ease-in-out;
+    }
+
+    .fragmentTitle{
+      font-weight:bold;
+      margin-bottom:10px;
+      color:#ff3c00;
+      font-size:16px;
+      letter-spacing:1px;
+    }
+
+    .hero-img{
+      max-width:340px;
+      width:90%;
+      border-radius:22px;
+      box-shadow:0 0 35px #00f7ff;
+      transition:.4s;
+    }
+
+    .hero-img:hover{
+      transform:scale(1.03);
+      box-shadow:0 0 60px rgba(0,247,255,0.9);
+    }
+
+    footer{
+      text-align:center;
+      padding:45px 20px;
+      background:#0a0f1f;
+      opacity:.9;
+      font-size:14px;
+    }
+
+    .socials{
+      margin-top:25px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .socials a{
+      color:#00f7ff;
+      text-decoration:none;
+      font-size:18px;
+      transition:.3s;
+    }
+
+    .socials a:hover{
+      color:#ff00c8;
+      text-shadow:0 0 15px #ff00c8;
+    }
+
+    .wallet-box{
+      margin-top:20px;
+      font-size:14px;
+      opacity:0.85;
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:15px;
+      margin-top:20px;
+    }
+
+    .stat-card{
+      padding:18px;
+      border-radius:15px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 0 20px rgba(0,247,255,0.2);
+      text-align:center;
+      animation:fadeIn .6s ease-in-out;
+    }
+
+    .stat-card span{
+      display:block;
+      margin-top:8px;
+      font-size:18px;
+      color:#ff9900;
+      text-shadow:0 0 10px rgba(255,153,0,0.6);
+    }
+
+    .loading{
+      opacity:0.7;
+      font-size:14px;
+    }
+
+    @media(max-width:600px){
+      header h1{font-size:38px;}
+      header p{font-size:15px;}
+      .btn{padding:12px 25px;font-size:13px;}
+    }
+
+    .commander-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin:28px 0 34px;}
+    .commander-card{overflow:hidden;border:1px solid rgba(0,247,255,.3);border-radius:18px;background:linear-gradient(160deg,rgba(16,24,39,.96),rgba(4,7,14,.98));box-shadow:0 0 22px rgba(0,247,255,.08);transition:transform .25s,border-color .25s,box-shadow .25s;}
+    .commander-card:hover{transform:translateY(-6px);border-color:#ff00c8;box-shadow:0 0 28px rgba(255,0,200,.2);}
+    .commander-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#080b13;}
+    .commander-info{padding:17px 16px 20px;text-align:center;}
+    .commander-info h3{font-size:15px;color:#00f7ff;line-height:1.7;margin-bottom:7px;}
+    .commander-info p{font-size:12px;opacity:.72;line-height:1.8;}
+    .commander-label{text-align:center;color:#ff9900;font-size:13px;letter-spacing:2px;margin:0 0 8px;}
+    @media(max-width:520px){.commander-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.commander-info{padding:12px 8px 15px}.commander-info h3{font-size:11px}.commander-info p{font-size:10px}}
+
+
+    .roadmap-intro{opacity:.72;line-height:1.8;margin:-8px 0 28px;}
+    .roadmap{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+    .roadmap::before{content:"";position:absolute;left:0;right:0;top:25px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,247,255,.55),rgba(255,0,200,.55),transparent);pointer-events:none;}
+    .roadmap-item{position:relative;padding:24px 20px 22px;border-radius:16px;border:1px solid rgba(0,247,255,.22);background:linear-gradient(145deg,rgba(16,24,39,.94),rgba(5,8,16,.96));box-shadow:0 0 22px rgba(0,247,255,.07);min-height:150px;}
+    .roadmap-item:hover{border-color:rgba(255,0,200,.65);box-shadow:0 0 26px rgba(255,0,200,.12);transform:translateY(-3px);transition:.25s;}
+    .roadmap-number{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;margin-bottom:16px;background:linear-gradient(135deg,#ff00c8,#00f7ff);color:#050711;font-weight:bold;box-shadow:0 0 18px rgba(0,247,255,.3);}
+    .roadmap-item h3{font-size:14px;color:#00f7ff;line-height:1.7;margin-bottom:8px;}
+    .roadmap-item p{font-size:12px;line-height:1.8;opacity:.75;}
+    .roadmap-status{display:inline-block;margin-top:13px;padding:5px 9px;border-radius:20px;border:1px solid rgba(255,153,0,.35);color:#ffb84d;font-size:10px;letter-spacing:.5px;}
+    @media(max-width:600px){.roadmap{grid-template-columns:1fr 1fr;gap:11px}.roadmap-item{padding:17px 13px;min-height:160px}.roadmap-item h3{font-size:12px}.roadmap-item p{font-size:11px}.roadmap-number{width:32px;height:32px;margin-bottom:11px}}
+
+
+    /* NOXGATOR Solana Points */
+    .points-panel{background:linear-gradient(145deg,rgba(10,18,32,.96),rgba(15,5,24,.96));border:1px solid rgba(0,247,255,.3);border-radius:22px;padding:26px;box-shadow:0 0 35px rgba(0,247,255,.12)}
+    .points-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+    .points-top p,.points-note{opacity:.72;line-height:1.8;font-size:13px}
+    .points-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+    .points-stat{padding:18px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);text-align:center}
+    .points-stat small{display:block;opacity:.7;font-size:11px}
+    .points-stat strong{display:block;color:#00f7ff;font-size:24px;margin-top:10px;overflow-wrap:anywhere}
+    .points-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .points-actions .btn{margin:4px 0}
+    .points-progress{height:9px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin:12px 0 8px}
+    .points-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff00c8,#00f7ff);transition:width .3s}
+    .points-status{margin:14px 0;padding:12px 15px;border-radius:12px;background:rgba(0,247,255,.07);border:1px solid rgba(0,247,255,.18);font-size:13px;line-height:1.8;overflow-wrap:anywhere}
+    .points-table-wrap{overflow-x:auto;margin-top:22px}
+    .points-table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
+    .points-table th,.points-table td{text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,.09)}
+    .points-table th{color:#ff9900}
+    .points-table td:first-child{color:#00f7ff}
+    .tier-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:18px}
+    .tier{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);border-radius:12px;padding:13px;font-size:12px;line-height:1.8}
+    .tier b{color:#00f7ff}
+    .disabled-btn{opacity:.45;cursor:not-allowed;transform:none!important}
+    @media(max-width:600px){.points-panel{padding:17px}.points-stat strong{font-size:20px}}
+
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <!-- CEO BLOCK ADDED -->
+  <div style="text-align:center; margin-bottom:25px;">
+    <img src="ceo.jpg" alt="CEO"
+      style="width:180px;height:180px;object-fit:cover;border-radius:50%;
+      box-shadow:0 0 30px #00f7ff;border:3px solid rgba(255,255,255,.2);">
+    <p style="margin-top:15px;font-size:20px;color:#00f7ff;text-shadow:0 0 10px #00f7ff;">
+      CEO : Alsheikh900
+    </p>
+  </div>
+
+  <h1>NOXGATOR</h1>
+  <p>Neon Fang Convergence | Six Territories. Six Commanders. 144 Warriors.</p>
+  <p style="margin-top:15px; font-size:16px; opacity:0.85;">
+    NOXGATOR is a dark fantasy universe inspired by the <strong>crocodile ecosystem</strong>,
+    aiming to support awareness, preservation, and respect for this endangered species.
+  </p>
+
+  <a class="btn" href="https://dexscreener.com/" target="_blank">View Chart</a>
+  <button class="btn secondary" onclick="connectWallet()">Connect Wallet</button>
+
+  <div class="wallet-box" id="walletAddress">Not Connected</div>
+
+  <div class="socials">
+    <a href="https://t.me/NOXGATORworld" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://x.com/NOXGATORworld" target="_blank" rel="noopener">X / Twitter</a>
+  </div>
+</header>
+
+<section style="text-align:center;padding:40px 20px;">
+  <img src="hero.png" alt="NOXGATOR Cyber Crocodile" class="hero-img">
+</section>
+
+<section>
+  <h2>Token Information</h2>
+
+  <div class="token-box">
+    <div class="contract-line">
+      <div class="contract">
+        <strong>Contract:</strong>
+        <span id="contractAddress">Coming Soon</span>
+      </div>
+
+      <button class="copy-btn" onclick="copyContract()">Copy</button>
+    </div>
+
+    <p><strong>Total Supply:</strong> 1 B</p>
+    <p><strong>Liquidity:</strong> </p>
+    <p><strong>Network:</strong> Solana</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        Price (USD)
+        <span id="price" class="loading">Loading...</span>
+      </div>
+
+      <div class="stat-card">
+        Market Cap
+        <span id="mcap" class="loading">Loading...</span>
+      </div>
+
+      <div class="stat-card">
+        Liquidity
+        <span id="liq" class="loading">Loading...</span>
+      </div>
+
+      <div class="stat-card">
+        24H Volume
+        <span id="vol" class="loading">Loading...</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="roadmap">
+  <h2>🗺️ NOXGATOR Roadmap</h2>
+  <p class="roadmap-intro">The path from building the universe to bringing NOXGATOR to life. Milestones and timing may evolve as development progresses.</p>
+  <div class="roadmap">
+    <article class="roadmap-item"><span class="roadmap-number">01</span><h3>Website Development</h3><p>Building the official home of the NOXGATOR universe and its community.</p><span class="roadmap-status">IN DEVELOPMENT</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">02</span><h3>Lore Release</h3><p>Reveal the world, history, territories, and stories behind the six commanders.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">03</span><h3>150 NFT Collection Launch</h3><p>Launch the limited NOXGATOR collection of 150 NFTs.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">04</span><h3>Community NFT Giveaway</h3><p>Give away 20 NFTs by raffle among participants who like and retweet the designated post. Rules and eligibility will be announced.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">05</span><h3>130 Holder NFTs</h3><p>Allocate 130 NFTs to the first 130 holders of the project token, subject to the announced eligibility rules.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">06</span><h3>Token Buyback</h3><p>Introduce the planned token buyback initiative and share its details with the community.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">07</span><h3>Game Beta</h3><p>Release a beta version of the NOXGATOR game project for early testing.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">08</span><h3>Game Details & Boosters</h3><p>Reveal more about gameplay, mechanics, and the boosters available in the game.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">09</span><h3>Official Game Launch</h3><p>Launch the game and open the NOXGATOR world to the community.</p><span class="roadmap-status">PLANNED</span></article>
+  </div>
+</section>
+
+<section>
+  <h2>🌀 The NOXGATOR Universe — The Veiled Pulse</h2>
+
+  <div class="tabs">
+    <button class="tabBtn active" onclick="showCategory('origin', this)">Origin</button>
+    <button class="tabBtn" onclick="showCategory('silence', this)">Silence</button>
+    <button class="tabBtn" onclick="showCategory('reflection', this)">Reflection</button>
+    <button class="tabBtn" onclick="showCategory('doubt', this)">Doubt</button>
+    <button class="tabBtn" onclick="showCategory('becoming', this)">Becoming</button>
+  </div>
+
+  <div id="fragmentContainer"></div>
+</section>
+
+<section>
+  <h2>🐊 The NOXGATOR Territories</h2>
+
+  <p class="commander-label">THE SIX RULERS OF THE MIRE</p>
+  <div class="commander-grid">
+    <article class="commander-card"><img src="commander1.png" alt="Krazix the Blood-Coded, commander of Red Mire Protocol"><div class="commander-info"><h3>KRAZIX THE BLOOD-CODED</h3><p>🔴 Red Mire Protocol<br>Violence is law. Hesitation is extinction.</p></div></article>
+    <article class="commander-card"><img src="commander2.png" alt="Silthar the Silent Root, commander of Nullwave Swamp"><div class="commander-info"><h3>SILTHAR THE SILENT ROOT</h3><p>🔵 Nullwave Swamp<br>Silence is supremacy.</p></div></article>
+    <article class="commander-card"><img src="commander3.png" alt="Vexa the Reflector, commander of Mirrorfen Grid"><div class="commander-info"><h3>VEXA THE REFLECTOR</h3><p>🟣 Mirrorfen Grid<br>Illusion. Deception. Fractured realities.</p></div></article>
+    <article class="commander-card"><img src="commander4.png" alt="Morvex the Decay Engine, commander of Rustbone Basin"><div class="commander-info"><h3>MORVEX THE DECAY ENGINE</h3><p>🟢 Rustbone Basin<br>Corrosion fuels strength.</p></div></article>
+    <article class="commander-card"><img src="commander5.png" alt="Aurex the Ascended, commander of Neon Abyss Verge"><div class="commander-info"><h3>AUREX THE ASCENDED</h3><p>🟡 Neon Abyss Verge<br>Evolution without limits.</p></div></article>
+    <article class="commander-card"><img src="commander6.png" alt="Nyxor the Hollow Crown, commander of Ashenroot Expanse"><div class="commander-info"><h3>NYXOR THE HOLLOW CROWN</h3><p>⚫ Ashenroot Expanse<br>The last forbidden signal.</p></div></article>
+  </div>
+  <div class="token-box">
+
+    <p>
+      In the depths of a neon-soaked mire, <strong>144 cyberpunk warriors</strong> emerged —
+      steel-veined predators bound to code, territory, and endless conflict.
+    </p>
+
+    <p>
+      The mire fractured into <strong>six hostile territories</strong>.
+      Each territory is ruled by <strong>one Commander</strong> and defended by <strong>24 warriors</strong>.
+    </p>
+
+    <p><strong>144 warriors. 6 Commanders. One living mire.</strong></p>
+
+    <hr style="opacity:.2;margin:25px 0;">
+
+    <p><strong>🔴 Red Mire Protocol</strong><br>
+      Commander: <strong>KRAZIX THE BLOOD-CODED</strong><br>
+      A realm where violence is law and hesitation is extinction.
+    </p>
+
+    <p><strong>🔵 Nullwave Swamp</strong><br>
+      Commander: <strong>SILTHAR THE SILENT ROOT</strong><br>
+      Soundless hunters. Invisible wars. Silence is supremacy.
+    </p>
+
+    <p><strong>🟣 Mirrorfen Grid</strong><br>
+      Commander: <strong>VEXA THE REFLECTOR</strong><br>
+      Illusion, deception, and fractured realities define this domain.
+    </p>
+
+    <p><strong>🟢 Rustbone Basin</strong><br>
+      Commander: <strong>MORVEX THE DECAY ENGINE</strong><br>
+      Corrosion fuels strength. Survival is the only truth.
+    </p>
+
+    <p><strong>🟡 Neon Abyss Verge</strong><br>
+      Commander: <strong>AUREX THE ASCENDED</strong><br>
+      The edge of evolution — where war may end, or mutate forever.
+    </p>
+
+    <p><strong>⚫ Ashenroot Expanse</strong><br>
+       Commander: <strong>NYXOR THE HOLLOW CROWN</strong><br>
+       A forgotten frontier where ancient roots guard the last forbidden signal.
+    </p>
+
+    <p>
+      The territories are never at peace.<br>
+      Alliances rot. Power shifts.<br>
+      <strong>The mire lives on war.</strong>
+    </p>
+
+  </div>
+</section>
+
+
+<section id="daily-points">
+  <h2>⚡ NOXGATOR Daily Points</h2>
+  <p class="roadmap-intro">Connect your Solana wallet, check in once per UTC day, and build your streak.</p>
+  <div class="points-panel">
+    <div class="points-top">
+      <div><h3 style="color:#00f7ff;margin-bottom:8px;">Daily Check-in</h3><p>One claim per wallet per day · Missing a full day resets your streak.</p></div>
+      <span style="color:#ff9900;font-size:12px;">SOLANA NETWORK</span>
+    </div>
+    <div class="points-actions">
+      <button class="btn" id="pointsConnectBtn" onclick="connectWallet()">Connect Solana Wallet</button>
+      <button class="btn secondary disabled-btn" id="pointsClaimBtn" onclick="claimDailyPoints()" disabled>CLAIM DAILY POINTS</button>
+      <button class="btn secondary" id="pointsDisconnectBtn" onclick="disconnectWallet()" style="display:none;">Disconnect</button>
+    </div>
+    <div class="points-status" id="pointsStatus" role="status">Connect Phantom or Solflare to view your points.</div>
+    <div class="points-grid">
+      <div class="points-stat"><small>TOTAL POINTS</small><strong id="totalPoints">0</strong></div>
+      <div class="points-stat"><small>CURRENT STREAK</small><strong id="currentStreak">0 days 🔥</strong></div>
+      <div class="points-stat"><small>NEXT CLAIM</small><strong id="nextReward">1 point</strong></div>
+      <div class="points-stat"><small>LAST CHECK-IN (UTC)</small><strong id="lastCheckin" style="font-size:14px;">—</strong></div>
+    </div>
+    <div style="font-size:13px;opacity:.8;">Streak progress to day 30</div>
+    <div class="points-progress"><span id="streakProgress"></span></div>
+    <p id="progressText" class="points-note">0 / 30 days</p>
+    <div class="tier-list">
+      <div class="tier"><b>Days 1–7</b><br>1 point / day</div>
+      <div class="tier"><b>Days 8–14</b><br>3 points / day</div>
+      <div class="tier"><b>Days 15–29</b><br>5 points / day</div>
+      <div class="tier"><b>Day 30+</b><br>10 points / day</div>
+    </div>
+    <div class="points-table-wrap">
+      <h3 style="color:#00f7ff;margin:12px 0;">🏆 Leaderboard</h3>
+      <p class="points-note">This preview ranks wallets recorded in this browser only. A shared, tamper-resistant leaderboard requires a backend database.</p>
+      <table class="points-table"><thead><tr><th>Rank</th><th>Wallet</th><th>Total points</th><th>Streak</th></tr></thead><tbody id="pointsLeaderboard"><tr><td colspan="4">No check-ins yet.</td></tr></tbody></table>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 NOXGATOR — Neon Fang Convergence
+</footer>
+
+<script>
+  const CONTRACT = "Coming Soon";
+  const BASE_CHAIN_ID = "0x2105";
+
+  let solanaProvider = null;
+  let connectedPublicKey = null;
+  const POINTS_STORAGE_PREFIX = "noxgator_points_v1:";
+  const POINTS_LAST_WALLET_KEY = "noxgator_last_wallet_v1";
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  function getSolanaProvider(){
+    if(window.phantom && window.phantom.solana && window.phantom.solana.isPhantom) return window.phantom.solana;
+    if(window.solflare && window.solflare.isSolflare) return window.solflare;
+    if(window.solana && (window.solana.isPhantom || window.solana.isSolflare)) return window.solana;
+    return null;
+  }
+  function utcDayNumber(date = new Date()){
+    return Math.floor(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / DAY_MS);
+  }
+  function walletShort(address){
+    return address ? address.slice(0,5) + "..." + address.slice(-5) : "—";
+  }
+  function pointsKey(address){ return POINTS_STORAGE_PREFIX + address; }
+  function readWalletPoints(address){
+    try {
+      const raw = localStorage.getItem(pointsKey(address));
+      const data = raw ? JSON.parse(raw) : {total:0, streak:0, lastDay:null, history:[]};
+      if(!Array.isArray(data.history)) data.history = [];
+      return data;
+    } catch(e) { return {total:0, streak:0, lastDay:null, history:[]}; }
+  }
+  function saveWalletPoints(address, data){
+    localStorage.setItem(pointsKey(address), JSON.stringify(data));
+  }
+  function normalizeStreak(data){
+    if(data.lastDay === null || data.lastDay === undefined) return data;
+    const gap = utcDayNumber() - Number(data.lastDay);
+    if(gap >= 2) data.streak = 0;
+    return data;
+  }
+  function rewardForDay(day){
+    if(day >= 30) return 10;
+    if(day >= 15) return 5;
+    if(day >= 8) return 3;
+    return 1;
+  }
+  function setPointsStatus(message){ document.getElementById("pointsStatus").textContent = message; }
+  async function connectWallet(){
+    const provider = getSolanaProvider();
+    if(!provider){
+      setPointsStatus("No Solana wallet detected. Install Phantom or Solflare, then reopen this page in the wallet browser.");
+      alert("Please install Phantom or Solflare to connect a Solana wallet.");
+      return;
+    }
+    try{
+      const response = await provider.connect();
+      const pubkey = response && response.publicKey ? response.publicKey.toString() : (provider.publicKey ? provider.publicKey.toString() : "");
+      if(!pubkey) throw new Error("No public key returned");
+      solanaProvider = provider;
+      connectedPublicKey = pubkey;
+      localStorage.setItem(POINTS_LAST_WALLET_KEY, pubkey);
+      document.getElementById("walletAddress").textContent = "Solana: " + walletShort(pubkey);
+      document.getElementById("pointsConnectBtn").textContent = walletShort(pubkey) + " Connected";
+      document.getElementById("pointsClaimBtn").disabled = false;
+      document.getElementById("pointsClaimBtn").classList.remove("disabled-btn");
+      document.getElementById("pointsDisconnectBtn").style.display = "inline-block";
+      renderPoints();
+      setPointsStatus("Wallet connected: " + walletShort(pubkey) + ". Your check-in profile is loaded.");
+      if(provider.on) provider.on("disconnect", disconnectWallet);
+    }catch(err){
+      setPointsStatus("Wallet connection cancelled or failed. Please try again.");
+    }
+  }
+  function disconnectWallet(){
+    const oldProvider = solanaProvider;
+    connectedPublicKey = null;
+    solanaProvider = null;
+    document.getElementById("walletAddress").textContent = "Not Connected";
+    document.getElementById("pointsConnectBtn").textContent = "Connect Solana Wallet";
+    document.getElementById("pointsClaimBtn").disabled = true;
+    document.getElementById("pointsClaimBtn").classList.add("disabled-btn");
+    document.getElementById("pointsDisconnectBtn").style.display = "none";
+    setPointsStatus("Wallet disconnected. Connect again to view your profile.");
+    renderPoints();
+    try { if(oldProvider && oldProvider.disconnect) oldProvider.disconnect(); } catch(e) {}
+  }
+  function claimDailyPoints(){
+    if(!connectedPublicKey){ setPointsStatus("Connect your Solana wallet first."); return; }
+    const today = utcDayNumber();
+    const data = readWalletPoints(connectedPublicKey);
+    if(data.lastDay === today){
+      setPointsStatus("You've already checked in today. Come back after 00:00 UTC.");
+      renderPoints();
+      return;
+    }
+    if(data.lastDay === null || data.lastDay === undefined || today - Number(data.lastDay) >= 2) data.streak = 1;
+    else if(today - Number(data.lastDay) === 1) data.streak = Number(data.streak || 0) + 1;
+    else data.streak = 1;
+
+    const reward = rewardForDay(data.streak);
+    data.total = Number(data.total || 0) + reward;
+    data.lastDay = today;
+    data.history.push({day:today, reward:reward, streak:data.streak});
+    if(data.history.length > 365) data.history = data.history.slice(-365);
+    saveWalletPoints(connectedPublicKey, data);
+    renderPoints();
+    setPointsStatus("Success! +" + reward + " point" + (reward === 1 ? "" : "s") + " added for streak day " + data.streak + ".");
+  }
+  function renderPoints(){
+    const totalEl = document.getElementById("totalPoints");
+    if(!connectedPublicKey){
+      totalEl.textContent = "0";
+      document.getElementById("currentStreak").textContent = "0 days 🔥";
+      document.getElementById("nextReward").textContent = "1 point";
+      document.getElementById("lastCheckin").textContent = "—";
+      document.getElementById("streakProgress").style.width = "0%";
+      document.getElementById("progressText").textContent = "Connect your wallet to view progress.";
+      renderLeaderboard();
+      return;
+    }
+    const data = normalizeStreak(readWalletPoints(connectedPublicKey));
+    saveWalletPoints(connectedPublicKey, data);
+    totalEl.textContent = Number(data.total || 0).toLocaleString();
+    document.getElementById("currentStreak").textContent = (data.streak || 0) + " days 🔥";
+    const alreadyClaimed = data.lastDay === utcDayNumber();
+    const nextDay = alreadyClaimed ? Math.min((data.streak || 0) + 1, 30) : ((data.lastDay !== null && data.lastDay !== undefined && utcDayNumber() - Number(data.lastDay) === 1) ? (data.streak || 0) + 1 : 1);
+    document.getElementById("nextReward").textContent = alreadyClaimed ? "Claimed today" : rewardForDay(nextDay) + (rewardForDay(nextDay) === 1 ? " point" : " points");
+    document.getElementById("lastCheckin").textContent = data.lastDay === null || data.lastDay === undefined ? "—" : new Date(Number(data.lastDay) * DAY_MS).toISOString().slice(0,10);
+    const progress = Math.min(100, ((data.streak || 0) / 30) * 100);
+    document.getElementById("streakProgress").style.width = progress + "%";
+    document.getElementById("progressText").textContent = Math.min(data.streak || 0,30) + " / 30 days" + (data.streak >= 30 ? " — Maximum tier unlocked" : "");
+    const claimBtn = document.getElementById("pointsClaimBtn");
+    claimBtn.disabled = alreadyClaimed;
+    claimBtn.classList.toggle("disabled-btn", alreadyClaimed);
+    claimBtn.textContent = alreadyClaimed ? "CHECKED IN TODAY ✓" : "CLAIM DAILY POINTS";
+    renderLeaderboard();
+  }
+  function renderLeaderboard(){
+    const entries = [];
+    for(let i=0;i<localStorage.length;i++){
+      const key = localStorage.key(i);
+      if(!key || !key.startsWith(POINTS_STORAGE_PREFIX)) continue;
+      try{
+        const address = key.slice(POINTS_STORAGE_PREFIX.length);
+        const data = JSON.parse(localStorage.getItem(key) || "{}");
+        entries.push({address:address,total:Number(data.total||0),streak:Number(data.streak||0)});
+      }catch(e){}
+    }
+    entries.sort((a,b)=>b.total-a.total || b.streak-a.streak);
+    const tbody = document.getElementById("pointsLeaderboard");
+    if(!entries.length){ tbody.innerHTML = '<tr><td colspan="4">No check-ins yet.</td></tr>'; return; }
+    tbody.innerHTML = entries.slice(0,100).map((e,i)=>'<tr><td>#'+(i+1)+'</td><td>'+walletShort(e.address)+'</td><td>'+e.total.toLocaleString()+'</td><td>🔥 '+e.streak+'</td></tr>').join("");
+  }
+
+  window.addEventListener("load", () => {
+    renderPoints();
+    const savedWallet = localStorage.getItem(POINTS_LAST_WALLET_KEY);
+    if(savedWallet) setPointsStatus("Previously used wallet: " + walletShort(savedWallet) + ". Connect your wallet to load points.");
+  });
+
+  async function copyContract(){
+    try{
+      await navigator.clipboard.writeText(CONTRACT);
+      alert("Contract Copied!");
+    }catch{
+      alert("Copy failed.");
+    }
+  }
+
+  const lore = {
+    origin: "NOXGATOR emerged from silence — a signal without a source.",
+    silence: "In silence, value consolidates. Noise dissolves.",
+    reflection: "The chain reflects only what the holder believes.",
+    doubt: "Doubt fragments weak conviction. Holders remain.",
+    becoming: "NOXGATOR is not merely a name. It is becoming."
+  };
+
+  function showCategory(key, btn){
+    document.getElementById("fragmentContainer").innerHTML = `
+      <div class="fragmentCard">
+        <div class="fragmentTitle">${key.toUpperCase()}</div>
+        <div>${lore[key]}</div>
+      </div>
+    `;
+
+    document.querySelectorAll(".tabBtn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  }
+
+  async function loadDexData(){
+    try{
+      const url = `https://api.dexscreener.com/latest/dex/tokens/${CONTRACT}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if(!data.pairs || data.pairs.length === 0){
+        document.getElementById("price").innerText = "N/A";
+        document.getElementById("mcap").innerText = "N/A";
+        document.getElementById("liq").innerText = "N/A";
+        document.getElementById("vol").innerText = "N/A";
+        return;
+      }
+
+      const pair = data.pairs[0];
+
+      document.getElementById("price").innerText = `$${Number(pair.priceUsd).toFixed(8)}`;
+      document.getElementById("mcap").innerText = `$${Number(pair.fdv).toLocaleString()}`;
+      document.getElementById("liq").innerText = `$${Number(pair.liquidity.usd).toLocaleString()}`;
+      document.getElementById("vol").innerText = `$${Number(pair.volume.h24).toLocaleString()}`;
+
+    }catch(err){
+      document.getElementById("price").innerText = "Error";
+      document.getElementById("mcap").innerText = "Error";
+      document.getElementById("liq").innerText = "Error";
+      document.getElementById("vol").innerText = "Error";
+    }
+  }
+
+  // Load default lore
+  showCategory("origin", document.querySelector(".tabBtn.active"));
+
+  // load dex stats disabled
+</script>
+
+</body>
+</html>
