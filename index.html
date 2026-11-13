@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NOXGATOR | Neon Fang Convergence</title>
+
+  <meta name="description" content="NOXGATOR - A dark fantasy universe of six territories, six commanders, and 144 warriors.">
+  <meta property="og:title" content="NOXGATOR | Neon Fang Convergence">
+  <meta property="og:description" content="Six territories. Six commanders. 144 warriors. One living mire.">
+  <meta property="og:image" content="hero.png">
+  <meta property="og:type" content="website">
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Orbitron',sans-serif;
+    }
+
+    body{
+      background:radial-gradient(circle at 20% 20%,#0f0f2a,#03050a 60%);
+      color:#fff;
+      overflow-x:hidden;
+    }
+
+    header{
+      text-align:center;
+      padding:90px 20px 60px;
+    }
+
+    header h1{
+      font-size:52px;
+      background:linear-gradient(90deg,#ff3c00,#00f7ff,#ff00c8);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 25px #00f7ff;
+      margin-bottom:10px;
+    }
+
+    header p{
+      opacity:.7;
+      margin-top:10px;
+      font-size:18px;
+      line-height:1.7;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:15px 35px;
+      margin:10px;
+      border-radius:40px;
+      background:linear-gradient(45deg,#ff00c8,#00f7ff);
+      color:#fff;
+      text-decoration:none;
+      border:none;
+      cursor:pointer;
+      transition:.3s;
+      font-size:15px;
+    }
+
+    .btn:hover{
+      transform:scale(1.08);
+      box-shadow:0 0 45px #00f7ff;
+    }
+
+    .btn.secondary{
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn.secondary:hover{
+      box-shadow:0 0 35px rgba(255,255,255,0.3);
+    }
+
+    section{
+      padding:80px 20px;
+      max-width:1200px;
+      margin:auto;
+    }
+
+    h2{
+      margin-bottom:25px;
+      font-size:28px;
+      color:#ff9900;
+      text-shadow:0 0 15px #ff9900;
+    }
+
+    .token-box{
+      background:rgba(20,25,34,0.7);
+      padding:30px;
+      border-radius:20px;
+      backdrop-filter:blur(15px);
+      box-shadow:0 0 30px rgba(255,60,0,.4);
+      line-height:2;
+      animation:fadeIn .6s ease-in-out;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(15px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    .contract-line{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .contract{
+      word-break:break-all;
+      font-size:14px;
+      opacity:0.9;
+    }
+
+    .copy-btn{
+      padding:10px 20px;
+      border-radius:25px;
+      border:none;
+      cursor:pointer;
+      background:linear-gradient(45deg,#00f7ff,#ff00c8);
+      color:#fff;
+      transition:.3s;
+      font-size:13px;
+    }
+
+    .copy-btn:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 25px #00f7ff;
+    }
+
+    .tabs{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:20px;
+    }
+
+    .tabBtn{
+      padding:10px 20px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:25px;
+      color:#fff;
+      cursor:pointer;
+      transition:.3s;
+      font-size:14px;
+    }
+
+    .tabBtn:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 20px rgba(0,247,255,0.5);
+    }
+
+    .tabBtn.active{
+      background:linear-gradient(45deg,#ff00c8,#00f7ff);
+      border:none;
+      box-shadow:0 0 30px rgba(0,247,255,0.7);
+    }
+
+    .fragmentCard{
+      background:rgba(20,25,34,0.8);
+      padding:25px;
+      border-radius:15px;
+      margin:10px 0;
+      box-shadow:0 0 25px rgba(0,247,255,0.5);
+      animation:fadeIn .6s ease-in-out;
+    }
+
+    .fragmentTitle{
+      font-weight:bold;
+      margin-bottom:10px;
+      color:#ff3c00;
+      font-size:16px;
+      letter-spacing:1px;
+    }
+
+
+    .token-ticker{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      margin:0 auto 22px;
+      padding:11px 24px;
+      border:1px solid rgba(156,255,0,.72);
+      border-radius:999px;
+      background:linear-gradient(110deg,rgba(156,255,0,.13),rgba(0,247,255,.12),rgba(255,0,200,.12));
+      color:#d7ff8a;
+      font-size:clamp(15px,2.5vw,21px);
+      font-weight:700;
+      letter-spacing:3px;
+      text-shadow:0 0 12px rgba(156,255,0,.8);
+      box-shadow:0 0 18px rgba(156,255,0,.22),inset 0 0 16px rgba(0,247,255,.08);
+      animation:tickerPulse 2.8s ease-in-out infinite;
+    }
+    .token-ticker .ticker-label{
+      color:rgba(255,255,255,.68);
+      font-size:10px;
+      letter-spacing:2px;
+    }
+    .token-ticker .ticker-symbol{
+      color:#fff;
+      font-size:1.25em;
+      letter-spacing:4px;
+    }
+    @keyframes tickerPulse{
+      0%,100%{box-shadow:0 0 14px rgba(156,255,0,.18),inset 0 0 16px rgba(0,247,255,.06)}
+      50%{box-shadow:0 0 30px rgba(156,255,0,.42),0 0 42px rgba(0,247,255,.16),inset 0 0 18px rgba(0,247,255,.12)}
+    }
+    @media(max-width:520px){.token-ticker{padding:10px 19px;gap:9px;letter-spacing:2px}.token-ticker .ticker-label{font-size:9px}}
+
+    .hero-img{
+      max-width:340px;
+      width:90%;
+      border-radius:22px;
+      box-shadow:0 0 35px #00f7ff;
+      transition:.4s;
+    }
+
+    .hero-img:hover{
+      transform:scale(1.03);
+      box-shadow:0 0 60px rgba(0,247,255,0.9);
+    }
+
+    footer{
+      text-align:center;
+      padding:45px 20px;
+      background:#0a0f1f;
+      opacity:.9;
+      font-size:14px;
+    }
+
+    .socials{
+      margin-top:25px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .socials a{
+      color:#00f7ff;
+      text-decoration:none;
+      font-size:18px;
+      transition:.3s;
+    }
+
+    .socials a:hover{
+      color:#ff00c8;
+      text-shadow:0 0 15px #ff00c8;
+    }
+
+    .wallet-box{
+      margin-top:20px;
+      font-size:14px;
+      opacity:0.85;
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:15px;
+      margin-top:20px;
+    }
+
+    .stat-card{
+      padding:18px;
+      border-radius:15px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 0 20px rgba(0,247,255,0.2);
+      text-align:center;
+      animation:fadeIn .6s ease-in-out;
+    }
+
+    .stat-card span{
+      display:block;
+      margin-top:8px;
+      font-size:18px;
+      color:#ff9900;
+      text-shadow:0 0 10px rgba(255,153,0,0.6);
+    }
+
+    .loading{
+      opacity:0.7;
+      font-size:14px;
+    }
+
+    @media(max-width:600px){
+      header h1{font-size:38px;}
+      header p{font-size:15px;}
+      .btn{padding:12px 25px;font-size:13px;}
+    }
+
+    .commander-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin:28px 0 34px;}
+    .commander-card{overflow:hidden;border:1px solid rgba(0,247,255,.3);border-radius:18px;background:linear-gradient(160deg,rgba(16,24,39,.96),rgba(4,7,14,.98));box-shadow:0 0 22px rgba(0,247,255,.08);transition:transform .25s,border-color .25s,box-shadow .25s;}
+    .commander-card:hover{transform:translateY(-6px);border-color:#ff00c8;box-shadow:0 0 28px rgba(255,0,200,.2);}
+    .commander-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:#080b13;}
+    .commander-info{padding:17px 16px 20px;text-align:center;}
+    .commander-info h3{font-size:15px;color:#00f7ff;line-height:1.7;margin-bottom:7px;}
+    .commander-info p{font-size:12px;opacity:.72;line-height:1.8;}
+    .commander-label{text-align:center;color:#ff9900;font-size:13px;letter-spacing:2px;margin:0 0 8px;}
+    @media(max-width:520px){.commander-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.commander-info{padding:12px 8px 15px}.commander-info h3{font-size:11px}.commander-info p{font-size:10px}}
+
+
+    .roadmap-intro{opacity:.72;line-height:1.8;margin:-8px 0 28px;}
+    .roadmap{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+    .roadmap::before{content:"";position:absolute;left:0;right:0;top:25px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,247,255,.55),rgba(255,0,200,.55),transparent);pointer-events:none;}
+    .roadmap-item{position:relative;padding:24px 20px 22px;border-radius:16px;border:1px solid rgba(0,247,255,.22);background:linear-gradient(145deg,rgba(16,24,39,.94),rgba(5,8,16,.96));box-shadow:0 0 22px rgba(0,247,255,.07);min-height:150px;}
+    .roadmap-item:hover{border-color:rgba(255,0,200,.65);box-shadow:0 0 26px rgba(255,0,200,.12);transform:translateY(-3px);transition:.25s;}
+    .roadmap-number{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;margin-bottom:16px;background:linear-gradient(135deg,#ff00c8,#00f7ff);color:#050711;font-weight:bold;box-shadow:0 0 18px rgba(0,247,255,.3);}
+    .roadmap-item h3{font-size:14px;color:#00f7ff;line-height:1.7;margin-bottom:8px;}
+    .roadmap-item p{font-size:12px;line-height:1.8;opacity:.75;}
+    .roadmap-status{display:inline-block;margin-top:13px;padding:5px 9px;border-radius:20px;border:1px solid rgba(255,153,0,.35);color:#ffb84d;font-size:10px;letter-spacing:.5px;}
+    @media(max-width:600px){.roadmap{grid-template-columns:1fr 1fr;gap:11px}.roadmap-item{padding:17px 13px;min-height:160px}.roadmap-item h3{font-size:12px}.roadmap-item p{font-size:11px}.roadmap-number{width:32px;height:32px;margin-bottom:11px}}
+
+
+    /* NOXGATOR Solana Points */
+    .points-panel{background:linear-gradient(145deg,rgba(10,18,32,.96),rgba(15,5,24,.96));border:1px solid rgba(0,247,255,.3);border-radius:22px;padding:26px;box-shadow:0 0 35px rgba(0,247,255,.12)}
+    .points-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:20px}
+    .points-top p,.points-note{opacity:.72;line-height:1.8;font-size:13px}
+    .points-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+    .points-stat{padding:18px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);text-align:center}
+    .points-stat small{display:block;opacity:.7;font-size:11px}
+    .points-stat strong{display:block;color:#00f7ff;font-size:24px;margin-top:10px;overflow-wrap:anywhere}
+    .points-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .points-actions .btn{margin:4px 0}
+    .points-progress{height:9px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin:12px 0 8px}
+    .points-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff00c8,#00f7ff);transition:width .3s}
+    .points-status{margin:14px 0;padding:12px 15px;border-radius:12px;background:rgba(0,247,255,.07);border:1px solid rgba(0,247,255,.18);font-size:13px;line-height:1.8;overflow-wrap:anywhere}
+    .points-table-wrap{overflow-x:auto;margin-top:22px}
+    .points-table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px}
+    .points-table th,.points-table td{text-align:left;padding:12px;border-bottom:1px solid rgba(255,255,255,.09)}
+    .points-table th{color:#ff9900}
+    .points-table td:first-child{color:#00f7ff}
+    .tier-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:18px}
+    .tier{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);border-radius:12px;padding:13px;font-size:12px;line-height:1.8}
+    .tier b{color:#00f7ff}
+    .disabled-btn{opacity:.45;cursor:not-allowed;transform:none!important}
+    @media(max-width:600px){.points-panel{padding:17px}.points-stat strong{font-size:20px}}
+    .auction-panel{background:linear-gradient(145deg,rgba(10,18,32,.96),rgba(25,8,25,.96));border:1px solid rgba(255,0,200,.32);border-radius:22px;padding:26px;box-shadow:0 0 35px rgba(255,0,200,.1)}
+    .auction-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+    .auction-stat{padding:17px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);text-align:center}
+    .auction-stat small{display:block;opacity:.7;font-size:11px}.auction-stat strong{display:block;color:#00f7ff;font-size:20px;margin-top:8px;overflow-wrap:anywhere}
+    .auction-input{width:min(100%,260px);padding:13px;border-radius:12px;border:1px solid rgba(0,247,255,.35);background:#080d18;color:#fff;font:inherit}
+    .auction-warning{font-size:12px;line-height:1.8;opacity:.78;margin-top:12px}.auction-status{padding:12px;border-radius:12px;background:rgba(0,247,255,.07);margin:14px 0;font-size:13px;line-height:1.8;overflow-wrap:anywhere}
+    @media(max-width:600px){.auction-panel{padding:17px}}
+
+
+
+  /* Background audio control */
+  .site-audio-control{
+    position:fixed;
+    right:16px;
+    bottom:22px;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 16px;
+    border:1px solid rgba(0,247,255,.65);
+    border-radius:999px;
+    background:rgba(8,12,25,.92);
+    color:#00f7ff;
+    box-shadow:0 0 18px rgba(0,247,255,.22), inset 0 0 12px rgba(255,0,200,.08);
+    font:700 11px 'Orbitron',sans-serif;
+    letter-spacing:.5px;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+  }
+  .site-audio-control[aria-pressed="true"]{border-color:#ff00c8;color:#fff;box-shadow:0 0 18px rgba(255,0,200,.3)}
+  .site-audio-control:focus-visible{outline:2px solid #fff;outline-offset:3px}
+  @media(max-width:520px){.site-audio-control{right:12px;bottom:14px;padding:10px 13px;font-size:10px}}
+
+
+
+/* ===== DEPLOYERS TEASER ===== */
+.deployers-section{padding-top:70px;padding-bottom:90px;max-width:1280px;overflow:hidden}
+.deployers-heading{text-align:center;margin-bottom:34px}
+.deployers-heading .deployers-kicker{display:inline-block;color:#9cff00;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;text-shadow:0 0 14px rgba(156,255,0,.7)}
+.deployers-heading h2{margin-bottom:10px}
+.deployers-heading p{max-width:700px;margin:0 auto;opacity:.68;line-height:1.8;font-size:13px}
+.deployers-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.deployer-card{position:relative;min-width:0;overflow:hidden;border-radius:22px;background:#050810;border:1px solid rgba(0,247,255,.25);box-shadow:0 0 28px rgba(0,247,255,.08);isolation:isolate;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.deployer-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(2,4,10,.15) 58%,rgba(2,4,10,.94) 100%);z-index:2;pointer-events:none}
+.deployer-card::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,#ff00c8,#00f7ff,#9cff00);transform:scaleX(.25);transform-origin:left;transition:transform .4s ease;z-index:4}
+.deployer-card:hover{transform:translateY(-10px) scale(1.015);border-color:rgba(255,0,200,.72);box-shadow:0 0 42px rgba(255,0,200,.18),0 0 65px rgba(0,247,255,.1)}
+.deployer-card:hover::after{transform:scaleX(1)}
+.deployer-card img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1),filter .5s ease;filter:saturate(1.05) contrast(1.04)}
+.deployer-card:hover img{transform:scale(1.07);filter:saturate(1.18) contrast(1.08)}
+.deployer-info{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:28px 22px 22px;text-align:left}
+.deployer-role{display:inline-flex;align-items:center;gap:7px;color:#9cff00;font-size:9px;letter-spacing:2.5px;font-weight:700;margin-bottom:8px;text-transform:uppercase}
+.deployer-role::before{content:"";width:7px;height:7px;border-radius:50%;background:#9cff00;box-shadow:0 0 12px #9cff00;animation:deployerPulse 1.8s ease-in-out infinite}
+.deployer-info h3{font-size:clamp(19px,2.4vw,28px);letter-spacing:1px;color:#fff;text-shadow:0 0 18px rgba(0,247,255,.45);margin:0 0 5px}
+.deployer-info p{font-size:11px;color:rgba(255,255,255,.65);margin:0;letter-spacing:1.5px}
+.deployer-index{position:absolute;top:15px;right:16px;z-index:3;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.62);padding:7px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(0,0,0,.24);backdrop-filter:blur(7px)}
+.deployers-line{height:1px;margin:34px auto 0;max-width:760px;background:linear-gradient(90deg,transparent,rgba(0,247,255,.45),rgba(255,0,200,.45),transparent)}
+@keyframes deployerPulse{0%,100%{opacity:.55;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+@media(max-width:850px){.deployers-track{grid-template-columns:repeat(3,78vw);overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 18px;scrollbar-width:none}.deployers-track::-webkit-scrollbar{display:none}.deployer-card{scroll-snap-align:center}.deployers-section{padding-left:12px;padding-right:12px}.deployers-heading h2{font-size:25px}}
+@media(max-width:520px){.deployers-track{grid-template-columns:88vw}.deployer-info{padding:24px 18px 18px}.deployer-info h3{font-size:22px}}
+
+
+    /* ===== NOXGATOR 150 NFT COLLECTION ===== */
+    .nft-section{max-width:1280px;padding-top:70px;padding-bottom:90px}
+    .nft-heading{text-align:center;margin-bottom:28px}
+    .nft-heading p{max-width:760px;margin:10px auto 0;opacity:.72;font-size:13px;line-height:1.9}
+    .nft-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0}
+    .nft-count{color:#9cff00;font-size:12px;letter-spacing:1px}
+    .nft-search{width:min(100%,280px);padding:12px 14px;border-radius:12px;border:1px solid rgba(0,247,255,.35);background:#080d18;color:#fff;font:inherit;font-size:12px}
+    .nft-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+    .nft-card{overflow:hidden;border-radius:15px;border:1px solid rgba(0,247,255,.22);background:linear-gradient(160deg,rgba(16,24,39,.96),rgba(4,7,14,.98));box-shadow:0 0 18px rgba(0,247,255,.06);transition:transform .25s,border-color .25s}
+    .nft-card:hover{transform:translateY(-5px);border-color:#ff00c8}
+    .nft-image-wrap{aspect-ratio:1/1;background:radial-gradient(circle,#14283a,#060912);display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .nft-card img{width:100%;height:100%;object-fit:cover;display:block}
+    .nft-missing{padding:12px;text-align:center;color:rgba(255,255,255,.5);font-size:11px;line-height:1.8}
+    .nft-card-info{padding:12px;text-align:center}
+    .nft-card-info h3{font-size:11px;color:#00f7ff;letter-spacing:.5px}
+    .nft-card-info p{font-size:10px;color:rgba(255,255,255,.55);margin-top:6px}
+    .nft-empty{grid-column:1/-1;text-align:center;padding:30px;opacity:.7}
+    @media(max-width:900px){.nft-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}}
+    @media(max-width:600px){.nft-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.nft-card-info{padding:10px 6px}.nft-card-info h3{font-size:10px}.nft-heading h2{font-size:24px}}
+
+  </style>
+</head>
+
+<body>
+
+  <audio id="siteBackgroundAudio" src="bg-audio.mp3" preload="auto" loop playsinline></audio>
+  <button id="siteAudioToggle" class="site-audio-control" type="button" aria-label="Turn background sound off" aria-pressed="false">♫ SOUND: ON</button>
+
+
+<header>
+
+  <!-- NOXGATOR CEO / PROJECT IDENTITY -->
+  <div class="ceo-profile" style="text-align:center;max-width:760px;margin:0 auto 30px;padding:0 14px;">
+    <img src="noxgator-ceo.png" alt="NOXGATOR — The Swamp King"
+      style="display:block;width:min(100%,420px);height:auto;aspect-ratio:1/1;object-fit:cover;
+      margin:0 auto;border-radius:24px;box-shadow:0 0 34px rgba(0,247,255,.55);
+      border:2px solid rgba(0,247,255,.45);">
+<p style="max-width:680px;margin:12px auto 0;padding:16px 20px;border:1px solid rgba(0,247,255,.25);
+      border-radius:16px;background:rgba(5,12,20,.78);font-size:14px;line-height:1.9;
+      color:rgba(255,255,255,.88);box-shadow:0 0 22px rgba(0,247,255,.10);">
+      The vision behind NOXGATOR is to build a bold, community-driven universe born from the swamp.
+      Blending cyberpunk crocodile mythology, digital collectibles, and interactive experiences,
+      NOXGATOR invites its community to explore a world built on creativity, strategy, and shared ambition.
+      <strong style="color:#9cff00;">Born from the swamp. Built to rule.</strong>
+    </p>
+  </div>
+
+  <div class="token-ticker" aria-label="NOXGATOR token ticker">
+    <span class="ticker-label">OFFICIAL TOKEN</span>
+    <span class="ticker-symbol">$NOX</span>
+  </div>
+  <h1>NOXGATOR</h1>
+  <p>Neon Fang Convergence | Six Territories. Six Commanders. 144 Warriors.</p>
+  <p style="margin-top:15px; font-size:16px; opacity:0.85;">
+    NOXGATOR is a dark fantasy universe inspired by the <strong>crocodile ecosystem</strong>,
+    aiming to support awareness, preservation, and respect for this endangered species.
+  </p>
+
+  <a class="btn" href="https://dexscreener.com/" target="_blank">View Chart</a>
+  <button class="btn secondary" onclick="connectWallet()">Connect Wallet</button>
+
+  <div class="wallet-box" id="walletAddress">Not Connected</div>
+
+  <div class="socials">
+    <a href="https://t.me/NOXGATORworld" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://x.com/NOXGATORworld" target="_blank" rel="noopener">X / Twitter</a>
+    <a href="https://discord.gg/VpkzQPa9p" target="_blank" rel="noopener">Discord</a>
+  </div>
+</header>
+
+<section style="text-align:center;padding:40px 20px;">
+  <img src="hero.png" alt="NOXGATOR Cyber Crocodile" class="hero-img">
+</section>
+
+<section>
+  <h2>Token Information</h2>
+
+  <div class="token-box">
+    <div class="contract-line">
+      <div class="contract">
+        <strong>Contract:</strong>
+        <span id="contractAddress">Coming Soon</span>
+      </div>
+
+      <button class="copy-btn" onclick="copyContract()">Copy</button>
+    </div>
+
+    <p><strong>Total Supply:</strong> 1 B</p>
+    <p><strong>Liquidity:</strong> </p>
+    <p><strong>Network:</strong> Solana</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        Price (USD)
+        <span id="price" class="loading">Loading...</span>
+      </div>
+
+      <div class="stat-card">
+        Market Cap
+        <span id="mcap" class="loading">Loading...</span>
+      </div>
+
+      <div class="stat-card">
+        Liquidity
+        <span id="liq" class="loading">Loading...</span>
+      </div>
+
+      <div class="stat-card">
+        24H Volume
+        <span id="vol" class="loading">Loading...</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="roadmap">
+  <h2>🗺️ NOXGATOR Roadmap</h2>
+  <p class="roadmap-intro">The path from building the universe to bringing NOXGATOR to life. Milestones and timing may evolve as development progresses.</p>
+  <div class="roadmap">
+    <article class="roadmap-item"><span class="roadmap-number">01</span><h3>Website Development</h3><p>Building the official home of the NOXGATOR universe and its community.</p><span class="roadmap-status">IN DEVELOPMENT</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">02</span><h3>Lore Release</h3><p>Reveal the world, history, territories, and stories behind the six commanders.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">03</span><h3>150 NFT Collection Launch</h3><p>Launch the limited NOXGATOR collection of 150 NFTs.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">04</span><h3>Community NFT Giveaway</h3><p>Give away 20 NFTs by raffle among participants who like and retweet the designated post. Rules and eligibility will be announced.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">05</span><h3>130 Holder NFTs</h3><p>Allocate 130 NFTs to the first 130 holders of the project token, subject to the announced eligibility rules.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">06</span><h3>Token Buyback</h3><p>Introduce the planned token buyback initiative and share its details with the community.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">07</span><h3>Game Beta</h3><p>Release a beta version of the NOXGATOR game project for early testing.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">08</span><h3>Game Details & Boosters</h3><p>Reveal more about gameplay, mechanics, and the boosters available in the game.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">09</span><h3>Official Game Launch</h3><p>Launch the game and open the NOXGATOR world to the community.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">10</span><h3>Community Points System</h3><p>Launch a points program that rewards eligible community activity and daily participation.</p><span class="roadmap-status">PLANNED</span></article>
+    <article class="roadmap-item"><span class="roadmap-number">11</span><h3>Anti-Cheat & Fair Play</h3><p>Introduce fraud detection, activity reviews, and bans for accounts confirmed to be cheating or manipulating rewards.</p><span class="roadmap-status">PLANNED</span></article>
+  </div>
+</section>
+
+<section>
+  <h2>🌀 The NOXGATOR Universe — The Veiled Pulse</h2>
+
+  <div class="tabs">
+    <button class="tabBtn active" onclick="showCategory('origin', this)">Origin</button>
+    <button class="tabBtn" onclick="showCategory('silence', this)">Silence</button>
+    <button class="tabBtn" onclick="showCategory('reflection', this)">Reflection</button>
+    <button class="tabBtn" onclick="showCategory('doubt', this)">Doubt</button>
+    <button class="tabBtn" onclick="showCategory('becoming', this)">Becoming</button>
+  </div>
+
+  <div id="fragmentContainer"></div>
+</section>
+
+<section>
+  <h2>🐊 The NOXGATOR Territories</h2>
+
+  <p class="commander-label">THE SIX RULERS OF THE MIRE</p>
+  <div class="commander-grid">
+    <article class="commander-card"><img src="commander1.png" alt="Krazix the Blood-Coded, commander of Red Mire Protocol"><div class="commander-info"><h3>KRAZIX THE BLOOD-CODED</h3><p>🔴 Red Mire Protocol<br>Violence is law. Hesitation is extinction.</p></div></article>
+    <article class="commander-card"><img src="commander2.png" alt="Silthar the Silent Root, commander of Nullwave Swamp"><div class="commander-info"><h3>SILTHAR THE SILENT ROOT</h3><p>🔵 Nullwave Swamp<br>Silence is supremacy.</p></div></article>
+    <article class="commander-card"><img src="commander3.png" alt="Vexa the Reflector, commander of Mirrorfen Grid"><div class="commander-info"><h3>VEXA THE REFLECTOR</h3><p>🟣 Mirrorfen Grid<br>Illusion. Deception. Fractured realities.</p></div></article>
+    <article class="commander-card"><img src="commander4.png" alt="Morvex the Decay Engine, commander of Rustbone Basin"><div class="commander-info"><h3>MORVEX THE DECAY ENGINE</h3><p>🟢 Rustbone Basin<br>Corrosion fuels strength.</p></div></article>
+    <article class="commander-card"><img src="commander5.png" alt="Aurex the Ascended, commander of Neon Abyss Verge"><div class="commander-info"><h3>AUREX THE ASCENDED</h3><p>🟡 Neon Abyss Verge<br>Evolution without limits.</p></div></article>
+    <article class="commander-card"><img src="commander6.png" alt="Nyxor the Hollow Crown, commander of Ashenroot Expanse"><div class="commander-info"><h3>NYXOR THE HOLLOW CROWN</h3><p>⚫ Ashenroot Expanse<br>The last forbidden signal.</p></div></article>
+  </div>
+  <div class="token-box">
+
+    <p>
+      In the depths of a neon-soaked mire, <strong>144 cyberpunk warriors</strong> emerged —
+      steel-veined predators bound to code, territory, and endless conflict.
+    </p>
+
+    <p>
+      The mire fractured into <strong>six hostile territories</strong>.
+      Each territory is ruled by <strong>one Commander</strong> and defended by <strong>24 warriors</strong>.
+    </p>
+
+    <p><strong>144 warriors. 6 Commanders. One living mire.</strong></p>
+
+    <hr style="opacity:.2;margin:25px 0;">
+
+    <p><strong>🔴 Red Mire Protocol</strong><br>
+      Commander: <strong>KRAZIX THE BLOOD-CODED</strong><br>
+      A realm where violence is law and hesitation is extinction.
+    </p>
+
+    <p><strong>🔵 Nullwave Swamp</strong><br>
+      Commander: <strong>SILTHAR THE SILENT ROOT</strong><br>
+      Soundless hunters. Invisible wars. Silence is supremacy.
+    </p>
+
+    <p><strong>🟣 Mirrorfen Grid</strong><br>
+      Commander: <strong>VEXA THE REFLECTOR</strong><br>
+      Illusion, deception, and fractured realities define this domain.
+    </p>
+
+    <p><strong>🟢 Rustbone Basin</strong><br>
+      Commander: <strong>MORVEX THE DECAY ENGINE</strong><br>
+      Corrosion fuels strength. Survival is the only truth.
+    </p>
+
+    <p><strong>🟡 Neon Abyss Verge</strong><br>
+      Commander: <strong>AUREX THE ASCENDED</strong><br>
+      The edge of evolution — where war may end, or mutate forever.
+    </p>
+
+    <p><strong>⚫ Ashenroot Expanse</strong><br>
+       Commander: <strong>NYXOR THE HOLLOW CROWN</strong><br>
+       A forgotten frontier where ancient roots guard the last forbidden signal.
+    </p>
+
+    <p>
+      The territories are never at peace.<br>
+      Alliances rot. Power shifts.<br>
+      <strong>The mire lives on war.</strong>
+    </p>
+
+  </div>
+</section>
+
+
+<section id="daily-points">
+  <h2>⚡ NOXGATOR Daily Points</h2>
+  <p class="roadmap-intro">Connect your Solana wallet, check in once per UTC day, and build your streak.</p>
+  <div class="points-panel">
+    <div class="points-top">
+      <div><h3 style="color:#00f7ff;margin-bottom:8px;">Daily Check-in</h3><p>One claim per wallet per day · Missing a full day resets your streak.</p></div>
+      <span style="color:#ff9900;font-size:12px;">SOLANA NETWORK</span>
+    </div>
+    <div class="points-actions">
+      <button class="btn" id="pointsConnectBtn" onclick="connectWallet()">Connect Solana Wallet</button>
+      <button class="btn secondary disabled-btn" id="pointsClaimBtn" onclick="claimDailyPoints()" disabled>CLAIM DAILY POINTS</button>
+      <button class="btn secondary" id="pointsDisconnectBtn" onclick="disconnectWallet()" style="display:none;">Disconnect</button>
+    </div>
+    <div class="points-status" id="pointsStatus" role="status">Connect Phantom or Solflare to view your points.</div>
+    <div class="points-grid">
+      <div class="points-stat"><small>TOTAL POINTS</small><strong id="totalPoints">0</strong></div>
+      <div class="points-stat"><small>CURRENT STREAK</small><strong id="currentStreak">0 days 🔥</strong></div>
+      <div class="points-stat"><small>NEXT CLAIM</small><strong id="nextReward">1 point</strong></div>
+      <div class="points-stat"><small>LAST CHECK-IN (UTC)</small><strong id="lastCheckin" style="font-size:14px;">—</strong></div>
+    </div>
+    <div style="font-size:13px;opacity:.8;">Streak progress to day 30</div>
+    <div class="points-progress"><span id="streakProgress"></span></div>
+    <p id="progressText" class="points-note">0 / 30 days</p>
+    <div class="tier-list">
+      <div class="tier"><b>Days 1–7</b><br>1 point / day</div>
+      <div class="tier"><b>Days 8–14</b><br>3 points / day</div>
+      <div class="tier"><b>Days 15–29</b><br>5 points / day</div>
+      <div class="tier"><b>Day 30+</b><br>10 points / day</div>
+    </div>
+    <div class="points-table-wrap">
+      <h3 style="color:#00f7ff;margin:12px 0;">🏆 Leaderboard</h3>
+      <p class="points-note">Top 100 wallets recorded by this browser are shown below. This is a local preview, not a global leaderboard; a server-side database and anti-cheat validation are required for shared rankings.</p>
+      <table class="points-table"><thead><tr><th>Rank</th><th>Wallet</th><th>Total points</th><th>Streak</th></tr></thead><tbody id="pointsLeaderboard"><tr><td colspan="4">No check-ins yet.</td></tr></tbody></table>
+    </div>
+  </div>
+</section>
+
+<section id="auction">
+  <h2>⚔️ NOXGATOR 90-Day SOL Auction</h2>
+  <p class="roadmap-intro">Participants are ranked by the total SOL received by the official project wallet during the 90-day campaign. Eligible rewards are token boxes, distributed after the campaign ends according to the published rules.</p>
+  <div class="auction-panel">
+    <div class="points-top"><div><h3 style="color:#00f7ff;margin-bottom:8px">SOL Contribution Ranking</h3><p>Connect your Solana wallet and contribute SOL to participate.</p></div><span style="color:#ff9900;font-size:12px">90-DAY CAMPAIGN</span></div>
+    <div class="auction-grid">
+      <div class="auction-stat"><small>CAMPAIGN DURATION</small><strong>90 Days</strong></div>
+      <div class="auction-stat"><small>TIME REMAINING</small><strong id="auctionCountdown">Starts when configured</strong></div>
+      <div class="auction-stat"><small>YOUR CONTRIBUTION</small><strong id="auctionYourTotal">0 SOL</strong></div>
+    </div>
+    <div class="points-actions">
+      <button class="btn" onclick="connectWallet()">Connect Solana Wallet</button>
+      <input class="auction-input" id="auctionAmount" type="number" min="0.001" step="0.001" placeholder="Amount in SOL">
+      <button class="btn secondary" id="auctionSendBtn" onclick="sendAuctionContribution()" disabled>Send SOL</button>
+    </div>
+    <div class="auction-status" id="auctionStatus" role="status">Auction wallet address has not been configured. Contributions are disabled until the official receiving address and campaign start time are added by the project team.</div>
+    <div class="points-table-wrap">
+      <div class="points-actions"><button class="btn secondary" type="button" onclick="refreshAuctionLeaderboard()">Refresh leaderboard</button></div>
+      <h3 style="color:#00f7ff;margin:12px 0">🏆 Auction Leaderboard — Top 100</h3>
+      <p class="points-note">Live ranking is read from confirmed Solana mainnet transactions sent directly to the official receiving wallet. Refreshes automatically; public RPC limits may delay updates.</p>
+      <table class="points-table"><thead><tr><th>Rank</th><th>Solana Wallet</th><th>Total SOL</th><th>Reward</th></tr></thead><tbody id="auctionLeaderboard"><tr><td colspan="4">Loading confirmed on-chain contributions…</td></tr></tbody></table>
+    </div>
+    <p class="auction-warning">Important: SOL transfers are irreversible. Always verify the receiving address and campaign rules on the official project channels before sending. Token boxes, eligibility, distribution date, and any exclusions must be announced by the project. Verify the receiving address and campaign dates before sending. Transfers are irreversible.</p>
+  </div>
+</section>
+
+
+<section id="deployers" class="deployers-section">
+  <div class="deployers-heading">
+    <span class="deployers-kicker">PROJECT DEPLOYERS</span>
+    <h2>⚔️ The Deployers</h2>
+    <p>Three elite figures. Three different threats. Together they represent the apex force behind the NOXGATOR project.</p>
+  </div>
+
+  <div class="deployers-track" aria-label="NOXGATOR project deployers">
+    <article class="deployer-card">
+      <span class="deployer-index">01 / 03</span>
+      <img src="deployer-apex-predator.png" alt="Apex Predator — NOXGATOR Deployer" loading="lazy">
+      <div class="deployer-info">
+        <span class="deployer-role">PROJECT DEPLOYER</span>
+        <h3>APEX PREDATOR</h3>
+        <p>THE HUNTER • THE DOMINANT FORCE</p>
+      </div>
+    </article>
+
+    <article class="deployer-card">
+      <span class="deployer-index">02 / 03</span>
+      <img src="deployer-deathjaw.png" alt="Deathjaw — NOXGATOR Deployer" loading="lazy">
+      <div class="deployer-info">
+        <span class="deployer-role">PROJECT DEPLOYER</span>
+        <h3>DEATHJAW</h3>
+        <p>THE EXECUTIONER • DEPLOY WITHOUT MERCY</p>
+      </div>
+    </article>
+
+    <article class="deployer-card">
+      <span class="deployer-index">03 / 03</span>
+      <img src="deployer-swamp-reaper.png" alt="Swamp Reaper — NOXGATOR Deployer" loading="lazy">
+      <div class="deployer-info">
+        <span class="deployer-role">PROJECT DEPLOYER</span>
+        <h3>SWAMP REAPER</h3>
+        <p>THE REAPER • RULER OF THE MIRE</p>
+      </div>
+    </article>
+  </div>
+  <div class="deployers-line" aria-hidden="true"></div>
+</section>
+
+
+<section id="nft-collection" class="nft-section">
+  <div class="nft-heading">
+    <span class="deployers-kicker">LIMITED GENESIS COLLECTION</span>
+    <h2>🐊 NOXGATOR — 150 Genesis NFTs</h2>
+    <p>Explore the 150-piece NOXGATOR collection. Add your artwork to the <strong>nft-images</strong> folder using the exact filenames <strong>1.webp</strong> through <strong>150.webp</strong>. The gallery updates automatically when the files are published.</p>
+  </div>
+  <div class="nft-toolbar">
+    <span class="nft-count" id="nftCollectionCount">150 GENESIS PIECES</span>
+    <input class="nft-search" id="nftSearch" type="search" placeholder="Search NFT number (e.g. 25)" aria-label="Search NFT number">
+  </div>
+  <div class="nft-grid" id="nftGrid" aria-live="polite"></div>
+  <p class="roadmap-intro" style="text-align:center;margin:24px 0 0">NFT preview gallery only — connect this collection to a deployed NFT mint program before enabling on-chain minting.</p>
+</section>
+
+<footer>
+  © 2026 NOXGATOR — Neon Fang Convergence
+</footer>
+
+<script>
+  const CONTRACT = "Coming Soon";
+  const BASE_CHAIN_ID = "0x2105";
+  // PROJECT CONFIG: set the official Solana receiving wallet and campaign start (UTC) before enabling contributions.
+  const AUCTION_RECEIVER = "6ZfQLjr5kUbHu56nbYWCZeeuUJZbNcBrkuoBsPg2Detu";
+  const AUCTION_START_UTC = "2026-11-14T00:00:00Z"; // Campaign opens at this UTC time
+  const AUCTION_DURATION_MS = 90 * 24 * 60 * 60 * 1000;
+
+  let solanaProvider = null;
+  let connectedPublicKey = null;
+  const POINTS_STORAGE_PREFIX = "noxgator_points_v1:";
+  const POINTS_LAST_WALLET_KEY = "noxgator_last_wallet_v1";
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  function getSolanaProvider(){
+    if(window.phantom && window.phantom.solana && window.phantom.solana.isPhantom) return window.phantom.solana;
+    if(window.solflare && window.solflare.isSolflare) return window.solflare;
+    if(window.solana && (window.solana.isPhantom || window.solana.isSolflare)) return window.solana;
+    return null;
+  }
+  function utcDayNumber(date = new Date()){
+    return Math.floor(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / DAY_MS);
+  }
+  function walletShort(address){
+    return address ? address.slice(0,5) + "..." + address.slice(-5) : "—";
+  }
+  function pointsKey(address){ return POINTS_STORAGE_PREFIX + address; }
+  function readWalletPoints(address){
+    try {
+      const raw = localStorage.getItem(pointsKey(address));
+      const data = raw ? JSON.parse(raw) : {total:0, streak:0, lastDay:null, history:[]};
+      if(!Array.isArray(data.history)) data.history = [];
+      return data;
+    } catch(e) { return {total:0, streak:0, lastDay:null, history:[]}; }
+  }
+  function saveWalletPoints(address, data){
+    localStorage.setItem(pointsKey(address), JSON.stringify(data));
+  }
+  function normalizeStreak(data){
+    if(data.lastDay === null || data.lastDay === undefined) return data;
+    const gap = utcDayNumber() - Number(data.lastDay);
+    if(gap >= 2) data.streak = 0;
+    return data;
+  }
+  function rewardForDay(day){
+    if(day >= 30) return 10;
+    if(day >= 15) return 5;
+    if(day >= 8) return 3;
+    return 1;
+  }
+  function setPointsStatus(message){ document.getElementById("pointsStatus").textContent = message; }
+  async function connectWallet(){
+    const provider = getSolanaProvider();
+    if(!provider){
+      setPointsStatus("No Solana wallet detected. Install Phantom or Solflare, then reopen this page in the wallet browser.");
+      alert("Please install Phantom or Solflare to connect a Solana wallet.");
+      return;
+    }
+    try{
+      const response = await provider.connect();
+      const pubkey = response && response.publicKey ? response.publicKey.toString() : (provider.publicKey ? provider.publicKey.toString() : "");
+      if(!pubkey) throw new Error("No public key returned");
+      solanaProvider = provider;
+      connectedPublicKey = pubkey;
+      localStorage.setItem(POINTS_LAST_WALLET_KEY, pubkey);
+      document.getElementById("walletAddress").textContent = "Solana: " + walletShort(pubkey);
+      document.getElementById("pointsConnectBtn").textContent = walletShort(pubkey) + " Connected";
+      document.getElementById("pointsClaimBtn").disabled = false;
+      document.getElementById("pointsClaimBtn").classList.remove("disabled-btn");
+      document.getElementById("pointsDisconnectBtn").style.display = "inline-block";
+      renderPoints();
+      updateAuctionUI();
+      setPointsStatus("Wallet connected: " + walletShort(pubkey) + ". Your check-in profile is loaded.");
+      if(provider.on) provider.on("disconnect", disconnectWallet);
+    }catch(err){
+      setPointsStatus("Wallet connection cancelled or failed. Please try again.");
+    }
+  }
+  function disconnectWallet(){
+    const oldProvider = solanaProvider;
+    connectedPublicKey = null;
+    solanaProvider = null;
+    document.getElementById("walletAddress").textContent = "Not Connected";
+    document.getElementById("pointsConnectBtn").textContent = "Connect Solana Wallet";
+    document.getElementById("pointsClaimBtn").disabled = true;
+    document.getElementById("pointsClaimBtn").classList.add("disabled-btn");
+    document.getElementById("pointsDisconnectBtn").style.display = "none";
+    setPointsStatus("Wallet disconnected. Connect again to view your profile.");
+    renderPoints();
+    updateAuctionUI();
+    try { if(oldProvider && oldProvider.disconnect) oldProvider.disconnect(); } catch(e) {}
+  }
+  function claimDailyPoints(){
+    if(!connectedPublicKey){ setPointsStatus("Connect your Solana wallet first."); return; }
+    const today = utcDayNumber();
+    const data = readWalletPoints(connectedPublicKey);
+    if(data.lastDay === today){
+      setPointsStatus("You've already checked in today. Come back after 00:00 UTC.");
+      renderPoints();
+      return;
+    }
+    if(data.lastDay === null || data.lastDay === undefined || today - Number(data.lastDay) >= 2) data.streak = 1;
+    else if(today - Number(data.lastDay) === 1) data.streak = Number(data.streak || 0) + 1;
+    else data.streak = 1;
+
+    const reward = rewardForDay(data.streak);
+    data.total = Number(data.total || 0) + reward;
+    data.lastDay = today;
+    data.history.push({day:today, reward:reward, streak:data.streak});
+    if(data.history.length > 365) data.history = data.history.slice(-365);
+    saveWalletPoints(connectedPublicKey, data);
+    renderPoints();
+    setPointsStatus("Success! +" + reward + " point" + (reward === 1 ? "" : "s") + " added for streak day " + data.streak + ".");
+  }
+  function renderPoints(){
+    const totalEl = document.getElementById("totalPoints");
+    if(!connectedPublicKey){
+      totalEl.textContent = "0";
+      document.getElementById("currentStreak").textContent = "0 days 🔥";
+      document.getElementById("nextReward").textContent = "1 point";
+      document.getElementById("lastCheckin").textContent = "—";
+      document.getElementById("streakProgress").style.width = "0%";
+      document.getElementById("progressText").textContent = "Connect your wallet to view progress.";
+      renderLeaderboard();
+      return;
+    }
+    const data = normalizeStreak(readWalletPoints(connectedPublicKey));
+    saveWalletPoints(connectedPublicKey, data);
+    totalEl.textContent = Number(data.total || 0).toLocaleString();
+    document.getElementById("currentStreak").textContent = (data.streak || 0) + " days 🔥";
+    const alreadyClaimed = data.lastDay === utcDayNumber();
+    const nextDay = alreadyClaimed ? Math.min((data.streak || 0) + 1, 30) : ((data.lastDay !== null && data.lastDay !== undefined && utcDayNumber() - Number(data.lastDay) === 1) ? (data.streak || 0) + 1 : 1);
+    document.getElementById("nextReward").textContent = alreadyClaimed ? "Claimed today" : rewardForDay(nextDay) + (rewardForDay(nextDay) === 1 ? " point" : " points");
+    document.getElementById("lastCheckin").textContent = data.lastDay === null || data.lastDay === undefined ? "—" : new Date(Number(data.lastDay) * DAY_MS).toISOString().slice(0,10);
+    const progress = Math.min(100, ((data.streak || 0) / 30) * 100);
+    document.getElementById("streakProgress").style.width = progress + "%";
+    document.getElementById("progressText").textContent = Math.min(data.streak || 0,30) + " / 30 days" + (data.streak >= 30 ? " — Maximum tier unlocked" : "");
+    const claimBtn = document.getElementById("pointsClaimBtn");
+    claimBtn.disabled = alreadyClaimed;
+    claimBtn.classList.toggle("disabled-btn", alreadyClaimed);
+    claimBtn.textContent = alreadyClaimed ? "CHECKED IN TODAY ✓" : "CLAIM DAILY POINTS";
+    renderLeaderboard();
+  }
+  function renderLeaderboard(){
+    const entries = [];
+    for(let i=0;i<localStorage.length;i++){
+      const key = localStorage.key(i);
+      if(!key || !key.startsWith(POINTS_STORAGE_PREFIX)) continue;
+      try{
+        const address = key.slice(POINTS_STORAGE_PREFIX.length);
+        const data = JSON.parse(localStorage.getItem(key) || "{}");
+        entries.push({address:address,total:Number(data.total||0),streak:Number(data.streak||0)});
+      }catch(e){}
+    }
+    entries.sort((a,b)=>b.total-a.total || b.streak-a.streak);
+    const tbody = document.getElementById("pointsLeaderboard");
+    if(!entries.length){ tbody.innerHTML = '<tr><td colspan="4">No check-ins yet.</td></tr>'; return; }
+    tbody.innerHTML = entries.slice(0,100).map((e,i)=>'<tr><td>#'+(i+1)+'</td><td>'+walletShort(e.address)+'</td><td>'+e.total.toLocaleString()+'</td><td>🔥 '+e.streak+'</td></tr>').join("");
+  }
+
+
+  // Public RPC failover: if one provider returns 403/rate-limit errors,
+  // the leaderboard automatically tries the next Solana mainnet endpoint.
+  const AUCTION_RPCS = [
+    "https://solana-rpc.publicnode.com",
+    "https://api.mainnet-beta.solana.com",
+    "https://solana.drpc.org"
+  ];
+  let auctionRpcIndex = 0;
+  let auctionRefreshBusy = false;
+
+  function auctionConnection(endpoint = AUCTION_RPCS[auctionRpcIndex]){
+    return new window.solanaWeb3.Connection(endpoint, {
+      commitment: "confirmed",
+      confirmTransactionInitialTimeout: 60000
+    });
+  }
+
+  function updateAuctionUI(){
+    const configured = AUCTION_RECEIVER.length >= 32;
+    const start = Date.parse(AUCTION_START_UTC);
+    const end = start + AUCTION_DURATION_MS;
+    const btn = document.getElementById("auctionSendBtn");
+    if(btn) btn.disabled = !(configured && connectedPublicKey && Number.isFinite(start) && Date.now() >= start && Date.now() < end);
+
+    const countdown = document.getElementById("auctionCountdown");
+    if(countdown){
+      if(!Number.isFinite(start)) countdown.textContent = "Not configured";
+      else if(Date.now() < start) countdown.textContent = Math.ceil((start-Date.now())/86400000)+" days to start";
+      else if(Date.now() >= end) countdown.textContent = "Ended";
+      else countdown.textContent = Math.ceil((end-Date.now())/86400000)+" days left";
+    }
+
+    const status = document.getElementById("auctionStatus");
+    if(status && !Number.isFinite(start)) status.textContent = "Campaign start time is invalid; contributions are disabled.";
+    else if(status && Date.now() >= end) status.textContent = "The 90-day campaign has ended. Contributions are closed.";
+    else if(status && Date.now() < start) status.textContent = "Campaign opens on " + new Date(start).toUTCString() + ". Contributions are disabled until then.";
+    else if(status && !connectedPublicKey) status.textContent = "Campaign is active. Connect a Solana wallet to contribute.";
+    else if(status && !status.dataset.tx) status.textContent = "Campaign is active. Verify the destination address in your wallet before approving.";
+  }
+
+  async function refreshAuctionLeaderboard(){
+    const tbody = document.getElementById("auctionLeaderboard");
+    if(auctionRefreshBusy) return;
+    if(!window.solanaWeb3){
+      tbody.innerHTML = '<tr><td colspan="4">Solana library unavailable. Refresh the page.</td></tr>';
+      return;
+    }
+
+    const startMs = Date.parse(AUCTION_START_UTC);
+    const endMs = startMs + AUCTION_DURATION_MS;
+    if(!Number.isFinite(startMs)){
+      tbody.innerHTML = '<tr><td colspan="4">Campaign start time is not configured correctly.</td></tr>';
+      return;
+    }
+    if(Date.now() < startMs){
+      tbody.innerHTML = '<tr><td colspan="4">Campaign has not started yet. The leaderboard will show confirmed contributions after it opens.</td></tr>';
+      if(connectedPublicKey) document.getElementById("auctionYourTotal").textContent = "0 SOL";
+      return;
+    }
+    if(Date.now() >= endMs){
+      // Still allow the final leaderboard to be read after the campaign closes.
+    }
+
+    auctionRefreshBusy = true;
+    let lastError = null;
+
+    try{
+      const receiver = new window.solanaWeb3.PublicKey(AUCTION_RECEIVER);
+      const startSec = Math.floor(startMs / 1000);
+      let completed = false;
+
+      // Try each RPC provider. A 403 from one provider does not stop the ranking.
+      for(let attempt = 0; attempt < AUCTION_RPCS.length && !completed; attempt++){
+        const rpcIndex = (auctionRpcIndex + attempt) % AUCTION_RPCS.length;
+        try{
+          const connection = auctionConnection(AUCTION_RPCS[rpcIndex]);
+          const totals = new Map();
+          let before, pages = 0, hasMore = true;
+
+          while(hasMore && pages < 10){
+            const sigs = await connection.getSignaturesForAddress(
+              receiver, {limit: 1000, before}, "confirmed"
+            );
+            if(!sigs.length) break;
+
+            pages++;
+            const eligible = sigs.filter(x => x.blockTime && x.blockTime >= startSec && !x.err);
+
+            for(let i = 0; i < eligible.length; i += 20){
+              const batch = eligible.slice(i, i + 20);
+              const txs = await connection.getParsedTransactions(
+                batch.map(x => x.signature),
+                {commitment:"confirmed", maxSupportedTransactionVersion:0}
+              );
+
+              for(const tx of txs){
+                if(!tx || !tx.meta || tx.meta.err) continue;
+                const instructions = [...(tx.transaction.message.instructions || [])];
+                for(const inner of (tx.meta.innerInstructions || [])){
+                  instructions.push(...inner.instructions);
+                }
+                for(const ix of instructions){
+                  const parsed = ix.parsed;
+                  if(!parsed || parsed.type !== "transfer" || !parsed.info) continue;
+                  const info = parsed.info;
+                  if(info.destination !== AUCTION_RECEIVER || !info.source || !Number.isFinite(Number(info.lamports))) continue;
+                  totals.set(info.source, (totals.get(info.source) || 0) + Number(info.lamports));
+                }
+              }
+            }
+
+            const oldest = sigs[sigs.length - 1];
+            if(!oldest || !oldest.blockTime || oldest.blockTime < startSec || sigs.length < 1000){
+              hasMore = false;
+            }else{
+              before = oldest.signature;
+            }
+          }
+
+          const rows = [...totals.entries()].sort((a,b) => b[1] - a[1]);
+          tbody.innerHTML = rows.length
+            ? rows.slice(0,100).map(([wallet,lamports],i) =>
+                '<tr><td>#'+(i+1)+'</td><td>'+walletShort(wallet)+'</td><td>'+(lamports/1e9).toFixed(4)+'</td><td>'+(i<10?'Token Box tier — subject to rules':'Token Box eligibility — subject to rules')+'</td></tr>'
+              ).join('')
+            : '<tr><td colspan="4">No confirmed contributions found in this campaign yet.</td></tr>';
+
+          if(connectedPublicKey){
+            const mine = (totals.get(connectedPublicKey) || 0) / 1e9;
+            document.getElementById("auctionYourTotal").textContent = mine.toFixed(4) + " SOL";
+          }
+
+          auctionRpcIndex = rpcIndex;
+          const status = document.getElementById("auctionStatus");
+          if(status && !status.dataset.tx){
+            status.textContent = "Leaderboard updated from confirmed Solana mainnet transfers. RPC: " +
+              new URL(AUCTION_RPCS[rpcIndex]).hostname +
+              ". Scanned up to " + (pages * 1000) + " recent signatures.";
+          }
+          completed = true;
+        }catch(err){
+          lastError = err;
+          console.warn("Auction RPC failed:", AUCTION_RPCS[rpcIndex], err);
+        }
+      }
+
+      if(!completed){
+        throw lastError || new Error("All public Solana RPC providers are unavailable.");
+      }
+    }catch(err){
+      const message = String(err && err.message ? err.message : err).replace(/[<>]/g,'');
+      tbody.innerHTML = '<tr><td colspan="4">Ranking temporarily unavailable: ' + message +
+        '. The page will retry automatically.</td></tr>';
+    }finally{
+      auctionRefreshBusy = false;
+    }
+  }
+
+  async function sendAuctionContribution(){
+    const amount=Number(document.getElementById("auctionAmount").value), status=document.getElementById("auctionStatus");
+    const start=Date.parse(AUCTION_START_UTC), end=start+AUCTION_DURATION_MS;
+    if(!connectedPublicKey || !solanaProvider){status.textContent="Connect your Solana wallet first.";return;}
+    if(Date.now()<start || Date.now()>=end){updateAuctionUI();return;}
+    if(!Number.isFinite(amount)||amount<0.001){status.textContent="Enter at least 0.001 SOL.";return;}
+    if(!window.solanaWeb3){status.textContent="Solana transaction library failed to load. Refresh and try again.";return;}
+    try{
+      const {PublicKey,Transaction,SystemProgram,LAMPORTS_PER_SOL}=window.solanaWeb3;
+      const connection=auctionConnection(), receiver=new PublicKey(AUCTION_RECEIVER);
+      const lamports=Math.round(amount*LAMPORTS_PER_SOL);
+      status.textContent="Preparing transaction. Check the destination address and amount in your wallet.";
+      const transaction=new Transaction().add(SystemProgram.transfer({fromPubkey:new PublicKey(connectedPublicKey),toPubkey:receiver,lamports}));
+      transaction.feePayer=new PublicKey(connectedPublicKey);
+      transaction.recentBlockhash=(await connection.getLatestBlockhash("confirmed")).blockhash;
+      const signature=await solanaProvider.sendTransaction(transaction,connection);
+      status.dataset.tx="1";
+      status.innerHTML='Submitted: <a style="color:#00f7ff" target="_blank" rel="noopener" href="https://solscan.io/tx/'+encodeURIComponent(signature)+'">View transaction on Solscan</a>. Waiting for confirmation…';
+      await connection.confirmTransaction(signature,"confirmed");
+      status.textContent="Contribution confirmed on Solana. Refreshing leaderboard…";
+      await refreshAuctionLeaderboard();
+      status.dataset.tx="";
+    }catch(err){status.textContent="Contribution failed or was cancelled: "+(err&&err.message?err.message:"wallet/network error");}
+  }
+  window.addEventListener("load", () => { updateAuctionUI(); refreshAuctionLeaderboard(); });
+  setInterval(updateAuctionUI,60000);
+  setInterval(refreshAuctionLeaderboard,120000);
+
+  window.addEventListener("load", () => {
+    renderPoints();
+    const savedWallet = localStorage.getItem(POINTS_LAST_WALLET_KEY);
+    if(savedWallet) setPointsStatus("Previously used wallet: " + walletShort(savedWallet) + ". Connect your wallet to load points.");
+  });
+
+  async function copyContract(){
+    try{
+      await navigator.clipboard.writeText(CONTRACT);
+      alert("Contract Copied!");
+    }catch{
+      alert("Copy failed.");
+    }
+  }
+
+  const lore = {
+    origin: "NOXGATOR emerged from silence — a signal without a source.",
+    silence: "In silence, value consolidates. Noise dissolves.",
+    reflection: "The chain reflects only what the holder believes.",
+    doubt: "Doubt fragments weak conviction. Holders remain.",
+    becoming: "NOXGATOR is not merely a name. It is becoming."
+  };
+
+  function showCategory(key, btn){
+    document.getElementById("fragmentContainer").innerHTML = `
+      <div class="fragmentCard">
+        <div class="fragmentTitle">${key.toUpperCase()}</div>
+        <div>${lore[key]}</div>
+      </div>
+    `;
+
+    document.querySelectorAll(".tabBtn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  }
+
+  async function loadDexData(){
+    try{
+      const url = `https://api.dexscreener.com/latest/dex/tokens/${CONTRACT}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if(!data.pairs || data.pairs.length === 0){
+        document.getElementById("price").innerText = "N/A";
+        document.getElementById("mcap").innerText = "N/A";
+        document.getElementById("liq").innerText = "N/A";
+        document.getElementById("vol").innerText = "N/A";
+        return;
+      }
+
+      const pair = data.pairs[0];
+
+      document.getElementById("price").innerText = `$${Number(pair.priceUsd).toFixed(8)}`;
+      document.getElementById("mcap").innerText = `$${Number(pair.fdv).toLocaleString()}`;
+      document.getElementById("liq").innerText = `$${Number(pair.liquidity.usd).toLocaleString()}`;
+      document.getElementById("vol").innerText = `$${Number(pair.volume.h24).toLocaleString()}`;
+
+    }catch(err){
+      document.getElementById("price").innerText = "Error";
+      document.getElementById("mcap").innerText = "Error";
+      document.getElementById("liq").innerText = "Error";
+      document.getElementById("vol").innerText = "Error";
+    }
+  }
+
+  // Load default lore
+  showCategory("origin", document.querySelector(".tabBtn.active"));
+
+  // load dex stats disabled
+
+  // Background music: attempt autoplay on page load. Browsers may block
+  // unmuted autoplay; in that case the first user interaction starts it.
+  (() => {
+    const audio = document.getElementById('siteBackgroundAudio');
+    const toggle = document.getElementById('siteAudioToggle');
+    if (!audio || !toggle) return;
+
+    let soundEnabled = localStorage.getItem('noxgatorSoundEnabled') !== 'false';
+    let started = false;
+
+    function updateAudioButton() {
+      if (!soundEnabled) {
+        toggle.textContent = '♫ SOUND: OFF';
+        toggle.setAttribute('aria-label', 'Turn background sound on');
+        toggle.setAttribute('aria-pressed', 'true');
+      } else if (started && !audio.paused) {
+        toggle.textContent = '♫ SOUND: ON';
+        toggle.setAttribute('aria-label', 'Turn background sound off');
+        toggle.setAttribute('aria-pressed', 'false');
+      } else {
+        toggle.textContent = '♫ TAP FOR SOUND';
+        toggle.setAttribute('aria-label', 'Start background sound');
+        toggle.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    async function startAudio() {
+      if (!soundEnabled) return;
+      try {
+        await audio.play();
+        started = true;
+        updateAudioButton();
+      } catch (error) {
+        // Autoplay restrictions require a user gesture on many phones.
+        updateAudioButton();
+      }
+    }
+
+    toggle.addEventListener('click', async () => {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem('noxgatorSoundEnabled', String(soundEnabled));
+      if (soundEnabled) {
+        await startAudio();
+      } else {
+        audio.pause();
+        updateAudioButton();
+      }
+    });
+
+    // Start on the first interaction if the browser blocked autoplay.
+    const firstInteraction = () => {
+      if (soundEnabled && audio.paused) startAudio();
+      window.removeEventListener('pointerdown', firstInteraction);
+      window.removeEventListener('keydown', firstInteraction);
+    };
+    window.addEventListener('pointerdown', firstInteraction, { once: true });
+    window.addEventListener('keydown', firstInteraction, { once: true });
+
+    audio.addEventListener('play', updateAudioButton);
+    audio.addEventListener('pause', updateAudioButton);
+    if (soundEnabled) startAudio();
+    else updateAudioButton();
+  })();
+
+
+  // NOXGATOR 150 NFT gallery. Place files at nft-images/1.webp ... nft-images/150.webp.
+  (() => {
+    const grid = document.getElementById('nftGrid');
+    const search = document.getElementById('nftSearch');
+    const count = document.getElementById('nftCollectionCount');
+    if (!grid || !search || !count) return;
+
+    function renderNFTs(filter = '') {
+      const query = filter.trim().replace(/^#/, '');
+      const ids = Array.from({length:150}, (_,i) => i + 1)
+        .filter(id => !query || String(id).includes(query));
+      count.textContent = `${ids.length} / 150 GENESIS PIECES`;
+      if (!ids.length) {
+        grid.innerHTML = '<div class="nft-empty">No NFT numbers match your search.</div>';
+        return;
+      }
+      grid.innerHTML = ids.map(id => {
+        const number = String(id).padStart(3, '0');
+        return `<article class="nft-card">
+          <div class="nft-image-wrap">
+            <img src="nft-images/${id}.webp" alt="NOXGATOR Genesis NFT #${number}" loading="lazy"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <div class="nft-missing" style="display:none">Artwork not added yet<br><strong>#${number}</strong><br>Upload ${id}.webp</div>
+          </div>
+          <div class="nft-card-info"><h3>NOXGATOR #${number}</h3><p>GENESIS NFT</p></div>
+        </article>`;
+      }).join('');
+    }
+    search.addEventListener('input', () => renderNFTs(search.value));
+    renderNFTs();
+  })();
+
+</script>
+
+</body>
+</html>
