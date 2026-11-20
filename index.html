@@ -2746,5 +2746,106 @@ async function startGenesisMint(){
 })();
 </script>
 
+<!-- NOXGATOR AI CHAT -->
+<style>
+#nxChatBtn{position:fixed;left:16px;bottom:22px;z-index:9999;padding:11px 16px;border:1px solid rgba(0,247,255,.65);border-radius:999px;background:rgba(8,12,25,.92);color:#00f7ff;font:700 11px 'Orbitron',sans-serif;cursor:pointer;box-shadow:0 0 18px rgba(0,247,255,.22)}
+#nxChat{position:fixed;left:12px;bottom:76px;z-index:9999;width:min(360px,calc(100vw - 24px));height:min(520px,70vh);display:flex;flex-direction:column;border:1px solid rgba(0,247,255,.5);border-radius:18px;background:rgba(5,8,18,.97);box-shadow:0 0 30px rgba(0,247,255,.25);overflow:hidden;font-family:'Orbitron',sans-serif}
+#nxChat[hidden]{display:none}
+#nxChatHead{padding:12px 14px;font-size:12px;letter-spacing:1px;color:#9cff00;border-bottom:1px solid rgba(0,247,255,.25);display:flex;justify-content:space-between;align-items:center}
+#nxChatHead button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer}
+#nxLog{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.nx-m{max-width:86%;padding:9px 12px;border-radius:12px;font-size:12px;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.nx-user{align-self:flex-end;background:linear-gradient(45deg,#ff00c8,#00f7ff);color:#050711}
+.nx-bot{align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff}
+#nxTs{padding:0 12px;min-height:0}
+#nxStatus{padding:4px 12px;font-size:10px;opacity:.7;color:#fff;min-height:16px}
+#nxForm{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(0,247,255,.25)}
+#nxInput{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(0,247,255,.35);background:#080d18;color:#fff;font-size:12px}
+#nxSend{padding:0 14px;border:none;border-radius:10px;background:linear-gradient(45deg,#ff00c8,#00f7ff);color:#050711;font-weight:700;cursor:pointer}
+#nxSend:disabled{opacity:.5}
+</style>
+
+<button id="nxChatBtn" type="button">🐊 ASK NOXGATOR</button>
+<div id="nxChat" hidden>
+  <div id="nxChatHead"><span>NOXGATOR ASSISTANT</span><button id="nxClose" type="button" aria-label="Close">×</button></div>
+  <div id="nxLog"></div>
+  <div id="nxTs"></div>
+  <div id="nxStatus"></div>
+  <form id="nxForm">
+    <input id="nxInput" maxlength="400" autocomplete="off" placeholder="Ask about NOXGATOR…">
+    <button id="nxSend" type="submit">SEND</button>
+  </form>
+</div>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script>
+(function(){
+  var API="https://noxgator-chatr-7190.seyedalirazavi933300102137.workers.dev/api/ask";
+  var SITEKEY="0x4AAAAAAGKnySFfgZdZmnxZ";
+  var $=function(id){return document.getElementById(id)};
+  var box=$("nxChat"),log=$("nxLog"),input=$("nxInput"),sendBtn=$("nxSend"),status=$("nxStatus");
+  var msgs=[],token="",wid=null,busy=false,tsTimer=null;
+
+  function addMsg(role,text){
+    var d=document.createElement("div");
+    d.className="nx-m nx-"+role;d.dir="auto";d.textContent=text;
+    log.appendChild(d);log.scrollTop=log.scrollHeight;return d;
+  }
+  function initTs(){
+    if(wid!==null)return;
+    if(!window.turnstile){ if(!tsTimer) tsTimer=setInterval(function(){initTs();if(wid!==null){clearInterval(tsTimer);tsTimer=null;}},500); return; }
+    wid=turnstile.render("#nxTs",{
+      sitekey:SITEKEY,
+      callback:function(t){token=t;status.textContent="";},
+      "expired-callback":function(){token="";if(window.turnstile&&wid!==null)turnstile.reset(wid);},
+      "error-callback":function(){token="";status.textContent="Verification error. Reload the page.";}
+    });
+  }
+  function open(){
+    box.hidden=false;initTs();
+    if(!log.children.length) addMsg("bot","Welcome to the swamp. Ask me anything about NOXGATOR.");
+    input.focus();
+  }
+  $("nxChatBtn").onclick=function(){ box.hidden?open():(box.hidden=true); };
+  $("nxClose").onclick=function(){ box.hidden=true; };
+
+  $("nxForm").addEventListener("submit",async function(e){
+    e.preventDefault();
+    var text=input.value.trim();
+    if(!text||busy)return;
+    if(!token){status.textContent="Verifying you're human… try again in a moment.";return;}
+    busy=true;sendBtn.disabled=true;input.value="";status.textContent="";
+    msgs.push({role:"user",content:text});
+    while(msgs.length>7) msgs.splice(0,2);
+    addMsg("user",text);
+    var out=addMsg("bot","…");
+    var t=token;token="";
+    try{
+      var r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:msgs,turnstileToken:t})});
+      if(!r.ok){var er=new Error("http");er.code=r.status;throw er;}
+      var rd=r.body.getReader(),dec=new TextDecoder(),full="";
+      while(true){
+        var x=await rd.read();if(x.done)break;
+        full+=dec.decode(x.value,{stream:true});
+        out.textContent=full;log.scrollTop=log.scrollHeight;
+      }
+      full=full.trim();
+      if(!full)throw new Error("empty");
+      msgs.push({role:"assistant",content:full.slice(0,400)});
+    }catch(err){
+      msgs.pop();
+      out.textContent = err.code===403 ? "Verification failed. Please try again."
+        : err.code===503 ? "The assistant is resting for now. Try again later."
+        : err.code===429 ? "Too many requests. Please wait a moment."
+        : "Something went wrong. Please try again.";
+    }finally{
+      busy=false;sendBtn.disabled=false;
+      if(window.turnstile&&wid!==null){token="";status.textContent="Verifying…";turnstile.reset(wid);}
+    }
+  });
+})();
+</script>
+<!-- /NOXGATOR AI CHAT -->
+
 </body>
 </html>
